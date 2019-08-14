@@ -1,47 +1,31 @@
-cmake_minimum_required(VERSION 3.0)
-cmake_policy(SET CMP0054 NEW)
-project(glug_platform_suite)
+project(example)
+include(cmake/add_example.cmake)
 
-set(GLUG_LIB_TARGET glug_platform)
-option(BUILD_XMPLS "Build the examples?")
-option(BUILD_TESTS "Build tests?")
+set(LIB glug_platform)
+find_package(${LIB} REQUIRED)
+set(GLUG_TARGET_NAME ${LIB}_test)
+set(GLUG_TARGET_NAME++ ${LIB}_test++)
 
-# disable find_package in any subproject for finding this lib
-macro(find_package)
-    if (NOT "${ARGV0}" STREQUAL ${GLUG_LIB_TARGET})
-        _find_package(${ARGV})
-    endif()
-endmacro()
+set(INSTALL_PATH example)
 
-# add the library subproject
-add_subdirectory(${GLUG_LIB_TARGET})
+add_example(
+    TARGET_NAME
+        ${GLUG_TARGET_NAME}
+    SRCS
+        main.c
+    LINK_LIB
+        ${LIB}
+    INSTALL_PATH
+        ${INSTALL_PATH}
+)
 
-# build and install examples
-if (${BUILD_XMPLS} STREQUAL "ON")
-    add_subdirectory(example)
-
-    # copy the glug lib to the example build dir if it's shared
-    if (NOT ${BUILD_STATIC})
-        add_custom_command(
-            OUTPUT
-                copy_lib POST_BUILD
-            COMMAND
-                ${CMAKE_COMMAND} -E copy
-                    $<TARGET_FILE:${GLUG_LIB_TARGET}> ${CMAKE_CURRENT_BINARY_DIR}/example
-            DEPENDS
-                ${GLUG_LIB_TARGET}
-        )
-        add_custom_target(
-            copy_lib_example
-            ALL
-            DEPENDS
-                copy_lib
-        )
-    endif()
-
-endif()
-
-if (${BUILD_TESTS})
-    enable_testing()
-    add_subdirectory(test)
-endif()
+add_example(
+    TARGET_NAME
+        ${GLUG_TARGET_NAME++}
+    SRCS
+        main.cpp
+    LINK_LIB
+        ${LIB}
+    INSTALL_PATH
+        ${INSTALL_PATH}
+)

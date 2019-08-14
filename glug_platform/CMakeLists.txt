@@ -14,31 +14,39 @@ set(INC_ROOT include/glug)
 list(
     APPEND
     COMMON_SOURCE
-    # add common source files
+    ${INC_ROOT}/platform.h
+    ${INC_ROOT}/platform/os.h
+    ${INC_ROOT}/platform/platform.h
+    ${INC_ROOT}/platform/version.h
+    ${SRC_ROOT}/platform.c
+    ${SRC_ROOT}/platform_platform.h
 )
 
 # Windows sources
+set(WIN32_ROOT ${SRC_ROOT}/win32)
 list(
     APPEND
     WIN32_SOURCE
     ${COMMON_SOURCE}
-    # add win32 specific source files
+    ${WIN32_ROOT}/platform.c
 )
 
 # Mac OS sources
+set(MACOS_ROOT ${SRC_ROOT}/macos)
 list(
     APPEND
     MACOS_SOURCE
     ${COMMON_SOURCE}
-    # add macos specific source files
+    ${MACOS_ROOT}/platform.c
 )
 
 # linux sources
+set(LINUX_ROOT ${SRC_ROOT}/linux)
 list(
     APPEND
     LINUX_SOURCE
     ${COMMON_SOURCE}
-    # add linux specific source files
+    ${LINUX_ROOT}/platform.c
 )
 
 add_gluglib(
