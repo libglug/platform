@@ -9,8 +9,8 @@
 
 GLUG_EXTERN_START
 
-GLUG_LIB_API enum glug_os           glug_plat_get_os(void);
-GLUG_LIB_API struct glug_os_version glug_plat_os_version(void);
+GLUG_LIB_API enum glug_os   glug_plat_get_os(void);
+GLUG_LIB_API int            glug_plat_os_version(struct glug_plat_version *);
 
 GLUG_EXTERN_END
 

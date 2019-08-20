@@ -1,6 +1,6 @@
 #include "../platform_platform.h"
 
-void os_version(struct glug_os_version *version)
+int os_version(struct glug_plat_version *version)
 {
     // TODO: set version
 }

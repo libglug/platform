@@ -3,6 +3,6 @@
 
 #include <glug/platform/version.h>
 
-void os_version(struct glug_os_version *version);
+int os_version(struct glug_plat_version *version);
 
 #endif // GLUG_PLATFORM_PLAT_H
