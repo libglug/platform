@@ -13,3 +13,9 @@ int glug_plat_os_version(struct glug_plat_version *version)
     memset(version, 0, sizeof(struct glug_plat_version));
     return os_version(version);
 }
+
+int glug_plat_kernel_version(struct glug_plat_version *version)
+{
+    memset(version, 0, sizeof(struct glug_plat_version));
+    return kernel_version(version);
+}
