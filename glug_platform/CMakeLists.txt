@@ -37,7 +37,7 @@ list(
     APPEND
     MACOS_SOURCE
     ${COMMON_SOURCE}
-    ${MACOS_ROOT}/platform.c
+    ${MACOS_ROOT}/platform.m
 )
 
 # linux sources
@@ -56,7 +56,7 @@ add_gluglib(
     MACOS_SOURCE ${MACOS_SOURCE}
     LINUX_SOURCE ${LINUX_SOURCE}
     WIN32_LIBS   Version
-    MACOS_LIBS
+    MACOS_LIBS   Foundation
     LINUX_LIBS
 )
 
