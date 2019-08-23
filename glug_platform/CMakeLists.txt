@@ -42,6 +42,7 @@ list(
     MACOS_SOURCE
     ${COMMON_SOURCE}
     ${MACOS_ROOT}/platform.m
+    ${MACOS_ROOT}/system.m
 )
 
 # linux sources
