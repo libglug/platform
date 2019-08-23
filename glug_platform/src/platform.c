@@ -3,7 +3,7 @@
 
 #include <string.h>
 
-enum glug_os glug_plat_get_os()
+enum glug_os glug_plat_os()
 {
     return glug_os_unknown;
 }

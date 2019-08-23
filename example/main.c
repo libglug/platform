@@ -14,5 +14,9 @@ int main(int argc, char **argv)
     printf("OS version: %d.%d.%d\n", os_vers.major, os_vers.minor, os_vers.patch);
     printf("Kernel version: %d.%d.%d\n", kern_vers.major, kern_vers.minor, kern_vers.patch);
 
+    printf("CPUs: %d\n", glug_sys_cpus());
+    printf("Active CPUs: %d\n", glug_sys_active_cpus());
+    printf("System memory (in bytes): %lld\n", glug_sys_mem());
+
     return 0;
 }

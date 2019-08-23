@@ -17,9 +17,12 @@ list(
     ${INC_ROOT}/platform.h
     ${INC_ROOT}/platform/os.h
     ${INC_ROOT}/platform/platform.h
+    ${INC_ROOT}/platform/system.h
     ${INC_ROOT}/platform/version.h
     ${SRC_ROOT}/platform.c
     ${SRC_ROOT}/platform_platform.h
+    ${SRC_ROOT}/system.c
+    ${SRC_ROOT}/system_platform.h
 )
 
 # Windows sources
@@ -29,6 +32,7 @@ list(
     WIN32_SOURCE
     ${COMMON_SOURCE}
     ${WIN32_ROOT}/platform.c
+    ${WIN32_ROOT}/system.c
 )
 
 # Mac OS sources

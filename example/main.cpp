@@ -16,6 +16,9 @@ int main(int, char **)
     cout << "Kernel version: " << kern_vers.major << "." <<
                                   kern_vers.minor << "." <<
                                   kern_vers.patch << endl;
+    cout << "CPUs: " << glug_sys_cpus() << endl;
+    cout << "Active CPUs: " << glug_sys_active_cpus() << endl;
+    cout << "System memory (in bytes): " << glug_sys_mem() << endl;
 
     return 0;
 }
