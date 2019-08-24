@@ -4,3 +4,8 @@ int os_version(struct glug_plat_version *version)
 {
     // TODO: set version
 }
+
+int kernel_version(struct glug_plat_version *version)
+{
+
+}

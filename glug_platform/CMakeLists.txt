@@ -52,6 +52,7 @@ list(
     LINUX_SOURCE
     ${COMMON_SOURCE}
     ${LINUX_ROOT}/platform.c
+    ${LINUX_ROOT}/system.c
 )
 
 add_gluglib(
