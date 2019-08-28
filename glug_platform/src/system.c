@@ -1,17 +1,30 @@
 #include <glug/platform/system.h>
 #include "system_platform.h"
 
-unsigned int glug_sys_cpus(void)
+#include <stdlib.h>
+
+uint32_t glug_sys_cpus(struct glug_sys *system)
 {
-    return cpu_count();
+    return system->cpu_count();
 }
 
-unsigned int glug_sys_active_cpus()
+uint32_t glug_sys_active_cpus(struct glug_sys *system)
 {
-    return active_cpus();
+    return system->active_cpus();
 }
 
-uint64_t glug_sys_mem(void)
+uint64_t glug_sys_mem(struct glug_sys *system)
 {
-    return physical_mem();
+    return system->physical_mem();
+}
+
+struct glug_sys *glug_sys_init()
+{
+    struct glug_sys *sys = malloc(sizeof(struct glug_sys));
+
+    sys->cpu_count = get_cpu_count_fcn();
+    sys->active_cpus = get_active_cpus_fcn();
+    sys->physical_mem = get_physical_mem_fcn();
+
+    return sys;
 }

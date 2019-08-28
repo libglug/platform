@@ -4,7 +4,12 @@
 
 typedef void (WINAPI * RtlGetVersion_t) (OSVERSIONINFOEX *);
 
-int os_version(struct glug_plat_version *version)
+static enum glug_os os(void)
+{
+    return glug_os_windows;
+}
+
+static bool os_version(struct glug_plat_version *version)
 {
     HANDLE ntdll = LoadLibrary(TEXT("ntdll.dll"));
     RtlGetVersion_t RtlGetVersion = NULL;
@@ -14,7 +19,7 @@ int os_version(struct glug_plat_version *version)
     if (ntdll && !(RtlGetVersion = (RtlGetVersion_t)GetProcAddress(ntdll, "RtlGetVersion")))
     {
         FreeLibrary(ntdll);
-        return 0;
+        return false;
     }
 
     RtlGetVersion(&vi);
@@ -24,10 +29,10 @@ int os_version(struct glug_plat_version *version)
     version->minor = vi.dwMinorVersion;
     version->patch = vi.wServicePackMajor;
 
-    return 1;
+    return true;
 }
 
-int kernel_version(struct glug_plat_version *version)
+static bool kernel_version(struct glug_plat_version *version)
 {
     DWORD len = GetFileVersionInfoSize(TEXT("Kernel32.dll"), NULL);
     void *fvi = malloc(len);
@@ -38,7 +43,7 @@ int kernel_version(struct glug_plat_version *version)
     if (!VerQueryValue(fvi, "\\", &vqv, bytes))
     {
         free(fvi);
-        return 0;
+        return false;
     }
 
     VS_FIXEDFILEINFO *file_info = (VS_FIXEDFILEINFO *)vqv;
@@ -47,5 +52,20 @@ int kernel_version(struct glug_plat_version *version)
     version->patch = HIWORD(file_info->dwFileVersionLS);
     free(fvi);
 
-    return 1;
+    return true;
+}
+
+enum glug_os (*get_os_fcn(void))(void)
+{
+    return os;
+}
+
+int (*get_os_version_fcn(void))(struct glug_plat_version *)
+{
+    return os_version;
+}
+
+int (*get_kernel_version_fcn(void))(struct glug_plat_version *)
+{
+    return kernel_version;
 }

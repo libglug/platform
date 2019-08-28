@@ -8,10 +8,13 @@
 
 GLUG_EXTERN_START
 
-GLUG_LIB_API unsigned int   glug_sys_cpus(void);
-GLUG_LIB_API unsigned int   glug_sys_active_cpus(void);
+struct glug_sys;
+GLUG_LIB_API struct glug_sys *  glug_sys_init(void);
 
-GLUG_LIB_API uint64_t       glug_sys_mem(void);
+GLUG_LIB_API unsigned int       glug_sys_cpus(struct glug_sys *);
+GLUG_LIB_API unsigned int       glug_sys_active_cpus(struct glug_sys *);
+
+GLUG_LIB_API uint64_t           glug_sys_mem(struct glug_sys *);
 
 GLUG_EXTERN_END
 

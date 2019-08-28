@@ -2,7 +2,7 @@
 
 #include <Windows.h>
 
-unsigned int cpu_count()
+static uint32_t cpu_count(void)
 {
     SYSTEM_INFO sysinf;
     GetSystemInfo(&sysinf);
@@ -10,7 +10,7 @@ unsigned int cpu_count()
     return sysinf.dwNumberOfProcessors;
 }
 
-unsigned int active_cpus()
+static uint32_t active_cpus(void)
 {
     unsigned int active = 0;
     SYSTEM_INFO sysinf;
@@ -25,11 +25,26 @@ unsigned int active_cpus()
     return active;
 }
 
-uint64_t physical_mem()
+static uint64_t physical_mem(void)
 {
     MEMORYSTATUSEX memstat;
     memstat.dwLength = sizeof(MEMORYSTATUSEX);
     GlobalMemoryStatusEx(&memstat);
 
     return memstat.ullTotalPhys;
+}
+
+uint32_t (*get_cpu_count_fcn(void))(void)
+{
+    return cpu_count;
+}
+
+uint32_t (*get_active_cpus_fcn(void))(void)
+{
+    return active_cpus;
+}
+
+uint64_t (*get_physical_mem_fcn(void))(void)
+{
+    return physical_mem;
 }

@@ -3,17 +3,27 @@ cmake_minimum_required(VERSION 3.0)
 set(VER_MAJOR 1)
 set(VER_MINOR 0)
 set(VER_PATCH 0)
-project(glug_platform VERSION ${VER_MAJOR}.${VER_MINOR}.${VER_PATCH})
+project(
+    glug_platform
+    VERSION ${VER_MAJOR}.${VER_MINOR}.${VER_PATCH}
+    LANGUAGES C
+)
 include(cmake/add_gluglib.cmake)
 
 option(BUILD_STATIC "Build as a static library instead of shared" "OFF")
 
+set(COM_ROOT common_headers/include/glug)
 set(SRC_ROOT src)
 set(INC_ROOT include/glug)
 
 list(
     APPEND
     COMMON_SOURCE
+    ${COM_ROOT}/bool.h
+    ${COM_ROOT}/extern.h
+    ${COM_ROOT}/import.h
+    ${COM_ROOT}/namespace.h
+    ${COM_ROOT}/os.h
     ${INC_ROOT}/platform.h
     ${INC_ROOT}/platform/os.h
     ${INC_ROOT}/platform/platform.h
@@ -45,7 +55,7 @@ list(
     ${MACOS_ROOT}/system.m
 )
 
-# linux sources
+# Linux sources
 set(LINUX_ROOT ${SRC_ROOT}/linux)
 list(
     APPEND
