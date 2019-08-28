@@ -3,19 +3,19 @@
 
 #include <stdlib.h>
 
-uint32_t glug_sys_cpus(struct glug_sys *system)
+bool glug_sys_cpus(struct glug_sys *system, uint32_t *ncpu)
 {
-    return system->cpu_count();
+    return system->cpu_count(ncpu);
 }
 
-uint32_t glug_sys_active_cpus(struct glug_sys *system)
+bool glug_sys_active_cpus(struct glug_sys *system, uint32_t *ncpu)
 {
-    return system->active_cpus();
+    return system->active_cpus(ncpu);
 }
 
-uint64_t glug_sys_mem(struct glug_sys *system)
+bool glug_sys_mem(struct glug_sys *system, uint64_t *bytes)
 {
-    return system->physical_mem();
+    return system->physical_mem(bytes);
 }
 
 struct glug_sys *glug_sys_init()

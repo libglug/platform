@@ -1,17 +1,18 @@
 #ifndef GLUG_SYSTEM_PLATFORM_H
 #define GLUG_SYSTEM_PLATFORM_H
 
+#include <glug/bool.h>
 #include <stdint.h>
 
 struct glug_sys
 {
-    uint32_t (*cpu_count)(void);
-    uint32_t (*active_cpus)(void);
-    uint64_t (*physical_mem)(void);
+    bool (*cpu_count)(uint32_t *);
+    bool (*active_cpus)(uint32_t *);
+    bool (*physical_mem)(uint64_t *);
 };
 
-uint32_t    (*get_cpu_count_fcn(void))(void);
-uint32_t    (*get_active_cpus_fcn(void))(void);
-uint64_t    (*get_physical_mem_fcn(void))(void);
+extern bool (*(*get_cpu_count_fcn)(void))(uint32_t *);
+extern bool (*(*get_active_cpus_fcn)(void))(uint32_t *);
+extern bool (*(*get_physical_mem_fcn)(void))(uint64_t *);
 
 #endif // GLUG_SYSTEM_PLATFORM_H

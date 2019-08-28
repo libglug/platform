@@ -33,6 +33,7 @@ list(
     ${SRC_ROOT}/platform_platform.h
     ${SRC_ROOT}/system.c
     ${SRC_ROOT}/system_platform.h
+    ${SRC_ROOT}/system_platform.c
 )
 
 # Windows sources
@@ -57,12 +58,28 @@ list(
 
 # Linux sources
 set(LINUX_ROOT ${SRC_ROOT}/linux)
+set(POSIX_ROOT ${SRC_ROOT}/posix)
 list(
     APPEND
     LINUX_SOURCE
     ${COMMON_SOURCE}
+    ${LINUX_ROOT}/platform.h
     ${LINUX_ROOT}/platform.c
+    ${LINUX_ROOT}/system.h
     ${LINUX_ROOT}/system.c
+    ${POSIX_ROOT}/platform.c
+    ${POSIX_ROOT}/system.h
+    ${POSIX_ROOT}/system.c
+)
+
+# BSD sources
+set(BSD_ROOT ${SRC_ROOT}/bsd)
+list(
+    APPEND
+    BSD_SOURCE
+    ${COMMON_SOURCE}
+    ${BSD_ROOT}/system.h
+    ${BSD_ROOT}/system.c
 )
 
 add_gluglib(
