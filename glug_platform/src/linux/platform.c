@@ -1,6 +1,6 @@
 #include "../platform_platform.h"
 
-static int os(void)
+static enum glug_os os(void)
 {
     return glug_os_linux;
 }

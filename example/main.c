@@ -1,6 +1,7 @@
-#include <stdio.h>
-
 #include <glug/platform.h>
+
+#include <stdio.h>
+#include <inttypes.h>
 
 int main(int argc, char **argv)
 {
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
     glug_sys_mem(system, &memory);
     printf("CPUs: %u\n", ncpu);
     printf("Active CPUs: %u\n", nactive);
-    printf("System memory (in bytes): %lu\n", memory);
+    printf("System memory (in bytes): %"PRIu64"\n", memory);
 
     return 0;
 }

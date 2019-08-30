@@ -18,7 +18,7 @@ bool glug_sys_mem(struct glug_sys *system, uint64_t *bytes)
     return system->physical_mem(bytes);
 }
 
-struct glug_sys *glug_sys_init()
+struct glug_sys *glug_sys_init(void)
 {
     struct glug_sys *sys = malloc(sizeof(struct glug_sys));
 

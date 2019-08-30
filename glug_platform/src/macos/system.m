@@ -2,17 +2,35 @@
 
 #import <Foundation/NSProcessInfo.h>
 
-unsigned int cpu_count(void)
+static bool cpu_count(uint32_t *ncpu)
 {
-    return (unsigned int)[[NSProcessInfo processInfo] processorCount];
+    *ncpu = (uint32_t)[[NSProcessInfo processInfo] processorCount];
+    return true;
 }
 
-unsigned int active_cpus(void)
+static bool active_cpus(uint32_t *ncpu)
 {
-    return (unsigned int)[[NSProcessInfo processInfo] activeProcessorCount];
+    *ncpu = (uint32_t)[[NSProcessInfo processInfo] activeProcessorCount];
+    return true;
 }
 
-uint64_t physical_mem(void)
+static bool physical_mem(uint64_t *bytes)
 {
-    return [[NSProcessInfo processInfo] physicalMemory];
+    *bytes =  [[NSProcessInfo processInfo] physicalMemory];
+    return true;
+}
+
+bool (*get_cpu_count_mac(void))(uint32_t *)
+{
+    return cpu_count;
+}
+
+bool (*get_active_cpus_mac(void))(uint32_t *)
+{
+    return active_cpus;
+}
+
+bool (*get_physical_mem_mac(void))(uint64_t *)
+{
+    return physical_mem;
 }

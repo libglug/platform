@@ -55,17 +55,17 @@ static bool kernel_version(struct glug_plat_version *version)
     return true;
 }
 
-enum glug_os (*get_os_fcn(void))(void)
+enum glug_os (*get_os_win(void))(void)
 {
     return os;
 }
 
-int (*get_os_version_fcn(void))(struct glug_plat_version *)
+int (*get_os_version_win(void))(struct glug_plat_version *)
 {
     return os_version;
 }
 
-int (*get_kernel_version_fcn(void))(struct glug_plat_version *)
+int (*get_kernel_version_win(void))(struct glug_plat_version *)
 {
     return kernel_version;
 }

@@ -9,12 +9,12 @@
 struct glug_plat
 {
     enum glug_os (*os)(void);
-    int          (*os_version)(struct glug_plat_version *);
-    int          (*kernel_version)(struct glug_plat_version *);
+    bool         (*os_version)(struct glug_plat_version *);
+    bool         (*kernel_version)(struct glug_plat_version *);
 };
 
-enum glug_os    (*get_os_fcn(void))(void);
-bool            (*get_os_version_fcn(void))(struct glug_plat_version *);
-bool            (*get_kernel_version_fcn(void))(struct glug_plat_version *);
+extern enum glug_os    (*(*get_os_fcn)(void))(void);
+extern bool            (*(*get_os_version_fcn)(void))(struct glug_plat_version *);
+extern bool            (*(*get_kernel_version_fcn)(void))(struct glug_plat_version *);
 
 #endif // GLUG_PLATFORM_PLATFORM_H

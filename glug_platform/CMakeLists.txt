@@ -31,6 +31,7 @@ list(
     ${INC_ROOT}/platform/version.h
     ${SRC_ROOT}/platform.c
     ${SRC_ROOT}/platform_platform.h
+    ${SRC_ROOT}/platform_platform.c
     ${SRC_ROOT}/system.c
     ${SRC_ROOT}/system_platform.h
     ${SRC_ROOT}/system_platform.c
@@ -42,7 +43,9 @@ list(
     APPEND
     WIN32_SOURCE
     ${COMMON_SOURCE}
+    ${WIN32_ROOT}/platform.h
     ${WIN32_ROOT}/platform.c
+    ${WIN32_ROOT}/system.h
     ${WIN32_ROOT}/system.c
 )
 
@@ -52,7 +55,9 @@ list(
     APPEND
     MACOS_SOURCE
     ${COMMON_SOURCE}
+    ${MACOS_ROOT}/platform.h
     ${MACOS_ROOT}/platform.m
+    ${MACOS_ROOT}/system.h
     ${MACOS_ROOT}/system.m
 )
 
@@ -67,6 +72,7 @@ list(
     ${LINUX_ROOT}/platform.c
     ${LINUX_ROOT}/system.h
     ${LINUX_ROOT}/system.c
+    ${POSIX_ROOT}/platform.h
     ${POSIX_ROOT}/platform.c
     ${POSIX_ROOT}/system.h
     ${POSIX_ROOT}/system.c
@@ -78,6 +84,8 @@ list(
     APPEND
     BSD_SOURCE
     ${COMMON_SOURCE}
+    ${BSD_ROOT}/platform.h
+    ${BSD_ROOT}/platform.c
     ${BSD_ROOT}/system.h
     ${BSD_ROOT}/system.c
 )

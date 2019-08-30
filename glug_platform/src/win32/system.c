@@ -2,15 +2,16 @@
 
 #include <Windows.h>
 
-static uint32_t cpu_count(void)
+static bool cpu_count(uint32_t *ncpu)
 {
     SYSTEM_INFO sysinf;
     GetSystemInfo(&sysinf);
 
-    return sysinf.dwNumberOfProcessors;
+    *ncpu = sysinf.dwNumberOfProcessors;
+    return true;
 }
 
-static uint32_t active_cpus(void)
+static bool active_cpus(uint32_t *ncpu)
 {
     unsigned int active = 0;
     SYSTEM_INFO sysinf;
@@ -22,29 +23,31 @@ static uint32_t active_cpus(void)
         sysinf.dwActiveProcessorMask >>= 1;
     }
 
-    return active;
+    *ncpu = active;
+    return true;
 }
 
-static uint64_t physical_mem(void)
+static bool physical_mem(uint64_t *bytes)
 {
     MEMORYSTATUSEX memstat;
     memstat.dwLength = sizeof(MEMORYSTATUSEX);
     GlobalMemoryStatusEx(&memstat);
 
-    return memstat.ullTotalPhys;
+    *bytes = memstat.ullTotalPhys;
+    return true;
 }
 
-uint32_t (*get_cpu_count_fcn(void))(void)
+bool (*get_cpu_count_win(void))(uint32_t *)
 {
     return cpu_count;
 }
 
-uint32_t (*get_active_cpus_fcn(void))(void)
+bool (*get_active_cpus_win(void))(uint32_t *)
 {
     return active_cpus;
 }
 
-uint64_t (*get_physical_mem_fcn(void))(void)
+bool (*get_physical_mem_win(void))(uint64_t *)
 {
     return physical_mem;
 }

@@ -25,12 +25,9 @@ struct glug_plat *glug_plat_init(void)
 {
     struct glug_plat *plat = malloc(sizeof(struct glug_plat));
 
-#ifdef GLUG_OS_LIN
-    #include "linux/platform.h"
-    plat->os = get_os_linux();
-    plat->os_version = get_os_version_linux();
-    plat->kernel_version = get_kernel_version_linux();
-#endif
+    plat->os = get_os_fcn();
+    plat->os_version = get_os_version_fcn();
+    plat->kernel_version = get_kernel_version_fcn();
 
     return plat;
 }
