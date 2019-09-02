@@ -1,15 +1,15 @@
-#include "../platform_platform.h"
+#include "platform.h"
 
 #include <Windows.h>
 
 typedef void (WINAPI * RtlGetVersion_t) (OSVERSIONINFOEX *);
 
-static enum glug_os os(void)
+enum glug_os os_win(void)
 {
     return glug_os_windows;
 }
 
-static bool os_version(struct glug_plat_version *version)
+glug_bool os_version_win(struct glug_plat_version *version)
 {
     HANDLE ntdll = LoadLibrary(TEXT("ntdll.dll"));
     RtlGetVersion_t RtlGetVersion = NULL;
@@ -32,7 +32,7 @@ static bool os_version(struct glug_plat_version *version)
     return true;
 }
 
-static bool kernel_version(struct glug_plat_version *version)
+glug_bool kernel_version_win(struct glug_plat_version *version)
 {
     DWORD len = GetFileVersionInfoSize(TEXT("Kernel32.dll"), NULL);
     void *fvi = malloc(len);
@@ -53,19 +53,4 @@ static bool kernel_version(struct glug_plat_version *version)
     free(fvi);
 
     return true;
-}
-
-enum glug_os (*get_os_win(void))(void)
-{
-    return os;
-}
-
-int (*get_os_version_win(void))(struct glug_plat_version *)
-{
-    return os_version;
-}
-
-int (*get_kernel_version_win(void))(struct glug_plat_version *)
-{
-    return kernel_version;
 }

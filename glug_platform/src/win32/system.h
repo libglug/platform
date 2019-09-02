@@ -4,8 +4,8 @@
 #include <glug/bool.h>
 #include <stdint.h>
 
-bool    (*get_cpu_count_win(void))(uint32_t *);
-bool    (*get_active_cpus_win(void))(uint32_t *);
-bool    (*get_physical_mem_win(void))(uint64_t *);
+glug_bool   cpu_count_win(uint32_t *);
+glug_bool   active_cpus_win(uint32_t *);
+glug_bool   physical_mem_win(uint64_t *);
 
 #endif // GLUG_SYSTEM_WIN32_H

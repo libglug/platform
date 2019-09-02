@@ -1,31 +1,16 @@
-#include "../platform_platform.h"
+#include "platform.h"
 
-static enum glug_os os(void)
+enum glug_os os_linux(void)
 {
     return glug_os_linux;
 }
 
-static int os_version(struct glug_plat_version *version)
+glug_bool os_version_linux(struct glug_plat_version *version)
 {
     // TODO: set version
 }
 
-static int kernel_version(struct glug_plat_version *version)
+glug_bool kernel_version_linux(struct glug_plat_version *version)
 {
 
-}
-
-enum glug_os (*get_os_linux(void))(void)
-{
-    return os;
-}
-
-int (*get_os_version_linux(void))(struct glug_plat_version *)
-{
-    return os_version;
-}
-
-int (*get_kernel_version_linux(void))(struct glug_plat_version *)
-{
-    return kernel_version;
 }

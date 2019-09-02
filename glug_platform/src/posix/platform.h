@@ -2,10 +2,12 @@
 #define GLUG_SYSTEM_POSIX_H
 
 #include <glug/bool.h>
-#include <stdint.h>
+#include <glug/platform/os.h>
+#include <glug/platform/version.h>
 
-bool    (*get_cpu_count_posix(void))(uint32_t *);
-bool    (*get_active_cpus_posix(void))(uint32_t *);
-bool    (*get_physical_mem_posix(void))(uint64_t *);
+
+enum glug_os    os_posix(void);
+glug_bool       os_version_posix(struct glug_plat_version *);
+glug_bool       kernel_version_posix(struct glug_plat_version *);
 
 #endif // GLUG_SYSTEM_POSIX_H

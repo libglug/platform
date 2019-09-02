@@ -6,8 +6,8 @@
 
 #include <glug/bool.h>
 
-enum glug_os    (*get_os_linux(void))(void);
-bool            (*get_os_version_linux(void))(struct glug_plat_version *);
-bool            (*get_kernel_version_linux(void))(struct glug_plat_version *);
+enum glug_os    os_linux(void);
+glug_bool       os_version_linux(struct glug_plat_version *);
+glug_bool       kernel_version_linux(struct glug_plat_version *);
 
 #endif // GLUG_PLATFORM_LINUX_H

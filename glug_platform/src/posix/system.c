@@ -1,8 +1,8 @@
-#include "../system_platform.h"
+#include "system.h"
 
 #include <unistd.h>
 
-static bool cpu_count(uint32_t *ncpu)
+glug_bool cpu_count_posix(uint32_t *ncpu)
 {
     long cpus = sysconf(_SC_NPROCESSORS_CONF);
     *ncpu = 0;
@@ -13,7 +13,7 @@ static bool cpu_count(uint32_t *ncpu)
     return true;
 }
 
-static bool active_cpus(uint32_t *ncpu)
+glug_bool active_cpus_posix(uint32_t *ncpu)
 {
     long cpus = sysconf(_SC_NPROCESSORS_ONLN);
     *ncpu = 0;
@@ -24,7 +24,7 @@ static bool active_cpus(uint32_t *ncpu)
     return true;
 }
 
-static bool physical_memory(uint64_t *bytes)
+glug_bool physical_mem_posix(uint64_t *bytes)
 {
     long pages = sysconf(_SC_PHYS_PAGES);
     long page_sz = sysconf(_SC_PAGESIZE);
@@ -36,17 +36,17 @@ static bool physical_memory(uint64_t *bytes)
     return true;
 }
 
-bool (*get_cpu_count_posix(void))(uint32_t *)
-{
-    return cpu_count;
-}
+//bool (*get_cpu_count_posix(void))(uint32_t *)
+//{
+//    return cpu_count;
+//}
 
-bool (*get_active_cpus_posix(void))(uint32_t *)
-{
-    return active_cpus;
-}
+//bool (*get_active_cpus_posix(void))(uint32_t *)
+//{
+//    return active_cpus;
+//}
 
-bool (*get_physical_mem_posix(void))(uint64_t *)
-{
-    return physical_memory;
-}
+//bool (*get_physical_mem_posix(void))(uint64_t *)
+//{
+//    return physical_memory;
+//}

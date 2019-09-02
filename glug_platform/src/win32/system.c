@@ -1,8 +1,8 @@
-#include "../system_platform.h"
+#include "system.h"
 
 #include <Windows.h>
 
-static bool cpu_count(uint32_t *ncpu)
+glug_bool cpu_count_win(uint32_t *ncpu)
 {
     SYSTEM_INFO sysinf;
     GetSystemInfo(&sysinf);
@@ -11,7 +11,7 @@ static bool cpu_count(uint32_t *ncpu)
     return true;
 }
 
-static bool active_cpus(uint32_t *ncpu)
+glug_bool active_cpus_win(uint32_t *ncpu)
 {
     unsigned int active = 0;
     SYSTEM_INFO sysinf;
@@ -27,7 +27,7 @@ static bool active_cpus(uint32_t *ncpu)
     return true;
 }
 
-static bool physical_mem(uint64_t *bytes)
+glug_bool physical_mem_win(uint64_t *bytes)
 {
     MEMORYSTATUSEX memstat;
     memstat.dwLength = sizeof(MEMORYSTATUSEX);
@@ -35,19 +35,4 @@ static bool physical_mem(uint64_t *bytes)
 
     *bytes = memstat.ullTotalPhys;
     return true;
-}
-
-bool (*get_cpu_count_win(void))(uint32_t *)
-{
-    return cpu_count;
-}
-
-bool (*get_active_cpus_win(void))(uint32_t *)
-{
-    return active_cpus;
-}
-
-bool (*get_physical_mem_win(void))(uint64_t *)
-{
-    return physical_mem;
 }

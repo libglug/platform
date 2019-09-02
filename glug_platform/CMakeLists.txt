@@ -30,11 +30,11 @@ list(
     ${INC_ROOT}/platform/system.h
     ${INC_ROOT}/platform/version.h
     ${SRC_ROOT}/platform.c
-    ${SRC_ROOT}/platform_platform.h
-    ${SRC_ROOT}/platform_platform.c
+    ${SRC_ROOT}/platform_builder.h
+    ${SRC_ROOT}/platform_builder.c
     ${SRC_ROOT}/system.c
-    ${SRC_ROOT}/system_platform.h
-    ${SRC_ROOT}/system_platform.c
+    ${SRC_ROOT}/system_builder.h
+    ${SRC_ROOT}/system_builder.c
 )
 
 # Windows sources
@@ -59,6 +59,7 @@ list(
     ${MACOS_ROOT}/platform.m
     ${MACOS_ROOT}/system.h
     ${MACOS_ROOT}/system.m
+
 )
 
 # Linux sources

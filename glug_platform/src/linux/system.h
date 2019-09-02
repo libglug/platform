@@ -4,8 +4,8 @@
 #include <glug/bool.h>
 #include <stdint.h>
 
-bool    (*get_cpu_count_linux(void))(uint32_t *);
-bool    (*get_active_cpus_linux(void))(uint32_t *);
-bool    (*get_physical_mem_linux(void))(uint64_t *);
+glug_bool    cpu_count_linux(uint32_t *);
+glug_bool    active_cpus_linux(uint32_t *);
+glug_bool    physical_mem_linux(uint64_t *);
 
 #endif // GLUG_SYSTEM_LINUX_H
