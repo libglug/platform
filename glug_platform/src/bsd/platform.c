@@ -1,11 +1,16 @@
-#include "../platform_platform.h"
+#include "platform.h"
 
-int os_version(struct glug_plat_version *version)
+enum glug_os os_bsd()
+{
+    return glug_os_unknown;
+}
+
+glug_bool os_version_bsd(struct glug_plat_version *version)
 {
     // TODO: set version
 }
 
-int kernel_version(struct glug_plat_version *version)
+glug_bool kernel_version_bsd(struct glug_plat_version *version)
 {
 
 }

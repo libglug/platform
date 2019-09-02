@@ -2,57 +2,44 @@
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#include <unistd.h>
 
-static uint32_t cpu_count(void)
+glug_bool cpu_count_bsd(uint32_t *ncpu)
 {
     int mib[2];
-    uint32_t ncpu;
     size_t len = sizeof(ncpu);
 
     mib[0] = CTL_HW;
     mib[1] = HW_NCPU;
-    sysctl(mib, 2, &ncpu, &len, (void *)0, 0);
+    sysctl(mib, 2, ncpu, &len, (void *)0, 0);
 
-    return ncpu;
+    return *ncpu > 0;
 }
 
-static uint32_t active_cpus(void)
+glug_bool active_cpus_bsd(uint32_t *ncpu)
 {
     int mib[2];
-    uint32_t ncpu;
-    size_t len = sizeof(ncpu);
+    size_t len = sizeof(ncpu), elems = 2;
 
+#ifdef HW_AVAILCPU
     mib[0] = CTL_HW;
     mib[1] = HW_AVAILCPU;
-    sysctl(mib, 2, &ncpu, &len, (void *)0, 0);
+#else
+    sysctlbyname("hw.availcpu", mib, &elems, (void *)0, 0);
+#endif
+    sysctl(mib, 2, ncpu, &len, (void *)0, 0);
 
-    return ncpu;
+    return *ncpu > 0;
 }
 
-static uint64_t physical_mem(void)
+glug_bool physical_mem_bsd(uint64_t *bytes)
 {
     int mib[2];
-    uint64_t membytes;
-    size_t len = sizeof(membytes);
+    size_t len = sizeof(*bytes);
 
     mib[0] = CTL_HW;
     mib[1] = HW_PHYSMEM;
-    sysctl(mib, 2, &membytes, &len, (void *)0, 0);
+    sysctl(mib, 2, bytes, &len, (void *)0, 0);
 
-    return membytes;
-}
-
-uint32_t (*get_cpu_count_bsd(void))(void)
-{
-    return cpu_count;
-}
-
-uint32_t (*get_active_cpus_bsd(void))(void)
-{
-    return active_cpus;
-}
-
-uint64_t (*get_physical_mem_bsd(void))(void)
-{
-    return physical_mem;
+    return *bytes > 0;
 }

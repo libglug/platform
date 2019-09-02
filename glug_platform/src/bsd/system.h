@@ -1,10 +1,11 @@
 #ifndef GLUG_SYSTEM_BSD_H
 #define GLUG_SYSTEM_BSD_H
 
+#include <glug/bool.h>
 #include <stdint.h>
 
-uint32_t    (*get_cpu_count_bsd(void))(void);
-uint32_t    (*get_active_cpus_bsd(void))(void);
-uint64_t    (*get_physical_mem_bsd(void))(void);
+glug_bool   cpu_count_bsd(uint32_t *);
+glug_bool   active_cpus_bsd(uint32_t *);
+glug_bool   physical_mem_bsd(uint64_t *);
 
 #endif // GLUG_SYSTEM_BSD_H

@@ -5,16 +5,19 @@
 
 glug_bool glug_sys_cpus(struct glug_sys *system, uint32_t *ncpu)
 {
+    *ncpu = 0;
     return system->cpu_count(ncpu);
 }
 
 glug_bool glug_sys_active_cpus(struct glug_sys *system, uint32_t *ncpu)
 {
+    *ncpu = 0;
     return system->active_cpus(ncpu);
 }
 
 glug_bool glug_sys_mem(struct glug_sys *system, uint64_t *bytes)
 {
+    *bytes = 0;
     return system->physical_mem(bytes);
 }
 

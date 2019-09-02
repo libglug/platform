@@ -7,7 +7,7 @@ function (add_gluglib)
 
     set(OPTIONS)
     set(SINGLE_VALS STATIC_BUILD TARGET_NAME)
-    set(MULTI_VALS WIN32_SOURCE MACOS_SOURCE LINUX_SOURCE WIN32_LIBS MACOS_LIBS LINUX_LIBS)
+    set(MULTI_VALS WIN32_SOURCE MACOS_SOURCE LINUX_SOURCE BSD_SOURCE WIN32_LIBS MACOS_LIBS LINUX_LIBS BSD_LIBS)
     cmake_parse_arguments(GLUG "${OPTIONS}" "${SINGLE_VALS}" "${MULTI_VALS}" ${ARGN})
 
     # make a giant list of all source files added to the project
@@ -26,6 +26,8 @@ function (add_gluglib)
         list(APPEND PLAT_SOURCE ${GLUG_MACOS_SOURCE})
     elseif (DEFINED GLUG_OS_LINUX)
         list(APPEND PLAT_SOURCE ${GLUG_LINUX_SOURCE})
+    elseif (DEFINED GLUG_OS_FRBSD)
+        list(APPEND PLAT_SOURCE ${GLUG_BSD_SOURCE})
     endif()
 
     # remove the source files from the "all" list for the current platform
@@ -58,6 +60,8 @@ function (add_gluglib)
         link_libs(${GLUG_TARGET_NAME} "${GLUG_MACOS_LIBS}")
     elseif (DEFINED GLUG_OS_LINUX)
         link_libs(${GLUG_TARGET_NAME} "${GLUG_LINUX_LIBS}")
+    elseif (DEFINED GLUG_OS_BSD)
+        link_libs(${GLUG_TARGET_NAME} "${GLUG_BSD_LIBS}")
     endif()
 
 endfunction()

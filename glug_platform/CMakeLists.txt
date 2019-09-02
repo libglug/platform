@@ -89,6 +89,8 @@ list(
     ${BSD_ROOT}/platform.c
     ${BSD_ROOT}/system.h
     ${BSD_ROOT}/system.c
+    ${POSIX_ROOT}/system.h
+    ${POSIX_ROOT}/system.c
 )
 
 add_gluglib(
@@ -97,6 +99,7 @@ add_gluglib(
     WIN32_SOURCE ${WIN32_SOURCE}
     MACOS_SOURCE ${MACOS_SOURCE}
     LINUX_SOURCE ${LINUX_SOURCE}
+    BSD_SOURCE   ${BSD_SOURCE}
     WIN32_LIBS   Version
     MACOS_LIBS   Foundation
     LINUX_LIBS

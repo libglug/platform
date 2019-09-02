@@ -35,18 +35,3 @@ glug_bool physical_mem_posix(uint64_t *bytes)
     *bytes = (uint64_t)pages * (uint64_t)page_sz;
     return true;
 }
-
-//bool (*get_cpu_count_posix(void))(uint32_t *)
-//{
-//    return cpu_count;
-//}
-
-//bool (*get_active_cpus_posix(void))(uint32_t *)
-//{
-//    return active_cpus;
-//}
-
-//bool (*get_physical_mem_posix(void))(uint64_t *)
-//{
-//    return physical_memory;
-//}

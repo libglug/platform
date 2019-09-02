@@ -25,6 +25,7 @@ int main(int argc, char **argv)
     glug_sys_cpus(system, &ncpu);
     glug_sys_active_cpus(system, &nactive);
     glug_sys_mem(system, &memory);
+
     printf("CPUs: %u\n", ncpu);
     printf("Active CPUs: %u\n", nactive);
     printf("System memory (in bytes): %"PRIu64"\n", memory);

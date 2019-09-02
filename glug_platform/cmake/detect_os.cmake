@@ -12,5 +12,9 @@ macro (detect_os)
 
         set(GLUG_OS_LINUX TRUE)
 
+    elseif("${CMAKE_SYSTEM_NAME}" STREQUAL "FreeBSD" OR "${CMAKE_SYSTEM_NAME}" STREQUAL "OpenBSD")
+
+        set(GLUG_OS_FRBSD TRUE)
+
     endif()
 endmacro()
