@@ -30,8 +30,8 @@ void build_system(struct glug_sys *system)
 
 void build_system(struct glug_sys *system)
 {
-    uint32_t tmp;
-    uint64_t ltmp;
+    uint32_t tmp = 0;
+    uint64_t ltmp = 0;
 
     system->cpu_count = cpu_count_posix(&tmp) ? cpu_count_posix : cpu_count_linux;
     system->active_cpus = active_cpus_posix(&tmp) ? active_cpus_posix : active_cpus_linux;
@@ -56,6 +56,17 @@ void build_system(struct glug_sys *system)
 #if __POSIX_VISIBLE
     system->active_cpus = active_cpus_bsd(&tmp) ? active_cpus_bsd : active_cpus_posix;
 #endif
+}
+
+#else // null
+
+#include "null/system.h"
+
+void build_system(struct glug_sys *system)
+{
+    system->cpu_count = cpu_count_null;
+    system->active_cpus = active_cpus_null;
+    system->physical_mem = physical_mem_null;
 }
 
 #endif

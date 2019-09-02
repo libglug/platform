@@ -37,6 +37,17 @@ list(
     ${SRC_ROOT}/system_builder.c
 )
 
+# NULL sources
+set (NULL_ROOT ${SRC_ROOT}/null)
+list(
+    APPEND
+    COMMON_SOURCE
+    ${NULL_ROOT}/platform.h
+    ${NULL_ROOT}/platform.c
+    ${NULL_ROOT}/system.h
+    ${NULL_ROOT}/system.c
+)
+
 # Windows sources
 set(WIN32_ROOT ${SRC_ROOT}/win32)
 list(
