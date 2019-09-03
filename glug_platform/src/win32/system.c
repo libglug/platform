@@ -2,37 +2,33 @@
 
 #include <Windows.h>
 
-glug_bool cpu_count_win(uint32_t *ncpu)
+uint32_t cpu_count_win(void)
 {
     SYSTEM_INFO sysinf;
-    GetSystemInfo(&sysinf);
+    GetNativeSystemInfo(&sysinf);
 
-    *ncpu = sysinf.dwNumberOfProcessors;
-    return true;
+    return sysinf.dwNumberOfProcessors;
 }
 
-glug_bool active_cpus_win(uint32_t *ncpu)
+uint32_t active_cpus_win(void)
 {
-    unsigned int active = 0;
+    uint32_t active = 0;
     SYSTEM_INFO sysinf;
 
-    GetSystemInfo(&sysinf);
+    GetNativeSystemInfo(&sysinf);
     while(sysinf.dwActiveProcessorMask > 0)
     {
         active += sysinf.dwActiveProcessorMask & 1;
         sysinf.dwActiveProcessorMask >>= 1;
     }
 
-    *ncpu = active;
-    return true;
+    return active;
 }
 
-glug_bool physical_mem_win(uint64_t *bytes)
+uint64_t physical_mem_win(void)
 {
-    MEMORYSTATUSEX memstat;
-    memstat.dwLength = sizeof(MEMORYSTATUSEX);
-    GlobalMemoryStatusEx(&memstat);
+    ULONGLONG bytes = 0;
+    GetPhysicallyInstalledSystemMemory(&bytes);
 
-    *bytes = memstat.ullTotalPhys;
-    return true;
+    return bytes;
 }

@@ -2,20 +2,17 @@
 
 #include <Foundation/NSProcessInfo.h>
 
-glug_bool cpu_count_mac(uint32_t *ncpu)
+uint32_t cpu_count_mac()
 {
-    *ncpu = (uint32_t)[[NSProcessInfo processInfo] processorCount];
-    return true;
+    return (uint32_t)[[NSProcessInfo processInfo] processorCount];
 }
 
-glug_bool active_cpus_mac(uint32_t *ncpu)
+uint32_t active_cpus_mac()
 {
-    *ncpu = (uint32_t)[[NSProcessInfo processInfo] activeProcessorCount];
-    return true;
+    return (uint32_t)[[NSProcessInfo processInfo] activeProcessorCount];
 }
 
-glug_bool physical_mem_mac(uint64_t *bytes)
+uint64_t physical_mem_mac()
 {
-    *bytes = [[NSProcessInfo processInfo] physicalMemory];
-    return true;
+    return [[NSProcessInfo processInfo] physicalMemory];
 }

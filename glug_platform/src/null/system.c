@@ -1,19 +1,16 @@
 #include "system.h"
 
-glug_bool cpu_count_null(uint32_t *ncpu)
+uint32_t cpu_count_null(void)
 {
-    (void) ncpu;
-    return false;
+    return 0;
 }
 
-glug_bool active_cpus_null(uint32_t *ncpu)
+uint32_t active_cpus_null(void)
 {
-    (void) ncpu;
-    return false;
+    return 0;
 }
 
-glug_bool physical_mem_null(uint64_t *bytes)
+uint64_t physical_mem_null(void)
 {
-    (void) bytes;
-    return false;
+    return 0;
 }

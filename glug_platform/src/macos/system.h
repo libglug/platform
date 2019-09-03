@@ -1,11 +1,10 @@
 #ifndef GLUG_SYSTEM_MACOS_H
 #define GLUG_SYSTEM_MACOS_H
 
-#include <glug/bool.h>
 #include <stdint.h>
 
-glug_bool   cpu_count_mac(uint32_t *);
-glug_bool   active_cpus_mac(uint32_t *);
-glug_bool   physical_mem_mac(uint64_t *);
+uint32_t    cpu_count_mac(void);
+uint32_t    active_cpus_mac(void);
+uint64_t    physical_mem_mac(void);
 
 #endif // GLUG_SYSTEM_MACOS_H

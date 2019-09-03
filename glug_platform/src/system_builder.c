@@ -30,12 +30,9 @@ void build_system(struct glug_sys *system)
 
 void build_system(struct glug_sys *system)
 {
-    uint32_t tmp = 0;
-    uint64_t ltmp = 0;
-
-    system->cpu_count = cpu_count_posix(&tmp) ? cpu_count_posix : cpu_count_linux;
-    system->active_cpus = active_cpus_posix(&tmp) ? active_cpus_posix : active_cpus_linux;
-    system->physical_mem = physical_mem_posix(&ltmp) ? physical_mem_posix : physical_mem_linux;
+    system->cpu_count = cpu_count_posix() ? cpu_count_posix : cpu_count_linux;
+    system->active_cpus = active_cpus_posix() ? active_cpus_posix : active_cpus_linux;
+    system->physical_mem = physical_mem_posix() ? physical_mem_posix : physical_mem_linux;
 }
 
 #elif defined(GLUG_OS_BSD)
@@ -47,14 +44,12 @@ void build_system(struct glug_sys *system)
 
 void build_system(struct glug_sys *system)
 {
-    uint32_t tmp = 0;
-
     system->cpu_count = cpu_count_bsd;
     system->active_cpus = active_cpus_bsd;
     system->physical_mem = physical_mem_bsd;
 
 #if __POSIX_VISIBLE
-    system->active_cpus = active_cpus_bsd(&tmp) ? active_cpus_bsd : active_cpus_posix;
+    system->active_cpus = active_cpus_bsd() ? active_cpus_bsd : active_cpus_posix;
 #endif
 }
 

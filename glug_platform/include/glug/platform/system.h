@@ -13,10 +13,10 @@ GLUG_EXTERN_START
 GLUG_LIB_API struct glug_sys *  glug_sys_create(void);
 GLUG_LIB_API struct glug_sys *  glug_sys_free(struct glug_sys *);
 
-GLUG_LIB_API glug_bool          glug_sys_cpus(struct glug_sys *, uint32_t *);
-GLUG_LIB_API glug_bool          glug_sys_active_cpus(struct glug_sys *, uint32_t *);
+GLUG_LIB_API uint32_t           glug_sys_cpus(struct glug_sys *);
+GLUG_LIB_API uint32_t           glug_sys_active_cpus(struct glug_sys *);
 
-GLUG_LIB_API glug_bool          glug_sys_mem(struct glug_sys *, uint64_t *);
+GLUG_LIB_API uint64_t           glug_sys_mem(struct glug_sys *);
 
 GLUG_EXTERN_END
 

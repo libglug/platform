@@ -2,36 +2,30 @@
 
 #include <unistd.h>
 
-glug_bool cpu_count_posix(uint32_t *ncpu)
+uint32_t cpu_count_posix()
 {
     long cpus = sysconf(_SC_NPROCESSORS_CONF);
-    *ncpu = 0;
 
-    if (cpus == -1) return false;
+    if (cpus == -1) return 0;
 
-    *ncpu = (uint32_t)cpus;
-    return true;
+    return (uint32_t)cpus;
 }
 
-glug_bool active_cpus_posix(uint32_t *ncpu)
+uint32_t active_cpus_posix()
 {
     long cpus = sysconf(_SC_NPROCESSORS_ONLN);
-    *ncpu = 0;
 
-    if (cpus == -1) return false;
+    if (cpus == -1) return 0;
 
-    *ncpu = (uint32_t)cpus;
-    return true;
+    return (uint32_t)cpus;
 }
 
-glug_bool physical_mem_posix(uint64_t *bytes)
+uint64_t physical_mem_posix()
 {
     long pages = sysconf(_SC_PHYS_PAGES);
     long page_sz = sysconf(_SC_PAGESIZE);
-    *bytes = 0;
 
-    if (pages == -1 || pages == -1) return false;
+    if (pages == -1 || pages == -1) return 0;
 
-    *bytes = (uint64_t)pages * (uint64_t)page_sz;
-    return true;
+    return (uint64_t)pages * (uint64_t)page_sz;
 }

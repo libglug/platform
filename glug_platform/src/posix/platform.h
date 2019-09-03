@@ -5,7 +5,6 @@
 #include <glug/platform/os.h>
 #include <glug/platform/version_t.h>
 
-
 enum glug_os    os_posix(void);
 glug_bool       os_version_posix(struct glug_plat_version *);
 glug_bool       kernel_version_posix(struct glug_plat_version *);

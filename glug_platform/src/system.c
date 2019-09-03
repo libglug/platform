@@ -3,24 +3,6 @@
 
 #include <stdlib.h>
 
-glug_bool glug_sys_cpus(struct glug_sys *system, uint32_t *ncpu)
-{
-    *ncpu = 0;
-    return system->cpu_count(ncpu);
-}
-
-glug_bool glug_sys_active_cpus(struct glug_sys *system, uint32_t *ncpu)
-{
-    *ncpu = 0;
-    return system->active_cpus(ncpu);
-}
-
-glug_bool glug_sys_mem(struct glug_sys *system, uint64_t *bytes)
-{
-    *bytes = 0;
-    return system->physical_mem(bytes);
-}
-
 struct glug_sys *glug_sys_create(void)
 {
     struct glug_sys *sys = malloc(sizeof(struct glug_sys));
@@ -36,4 +18,22 @@ struct glug_sys *glug_sys_free(struct glug_sys *system)
         free(system);
 
     return NULL;
+}
+
+uint32_t glug_sys_cpus(struct glug_sys *system)
+{
+    uint32_t ncpu = system->cpu_count();
+    return ncpu;
+}
+
+uint32_t glug_sys_active_cpus(struct glug_sys *system)
+{
+    uint32_t ncpu = system->active_cpus();
+    return ncpu;
+}
+
+uint64_t glug_sys_mem(struct glug_sys *system)
+{
+    uint64_t bytes = system->physical_mem();
+    return bytes;
 }

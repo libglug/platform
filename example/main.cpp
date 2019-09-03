@@ -20,11 +20,9 @@ int main(int, char **)
                                   kern_vers.minor << "." <<
                                   kern_vers.patch << endl;
 
-    uint32_t ncpu, nactive;
-    uint64_t memory;
-    glug_sys_cpus(system, &ncpu);
-    glug_sys_active_cpus(system, &nactive);
-    glug_sys_mem(system, &memory);
+    uint32_t ncpu = glug_sys_cpus(system);
+    uint32_t nactive = glug_sys_active_cpus(system);
+    uint64_t memory = glug_sys_mem(system);
 
     cout << "CPUs: " << ncpu << endl <<
             "Active CPUs: " << nactive << endl <<

@@ -6,9 +6,9 @@
 
 struct glug_sys
 {
-    glug_bool (*cpu_count)(uint32_t *);
-    glug_bool (*active_cpus)(uint32_t *);
-    glug_bool (*physical_mem)(uint64_t *);
+    uint32_t (*cpu_count)(void);
+    uint32_t (*active_cpus)(void);
+    uint64_t (*physical_mem)(void);
 };
 
 void build_system(struct glug_sys *);

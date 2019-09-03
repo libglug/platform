@@ -4,42 +4,46 @@
 #include <sys/sysctl.h>
 #include <unistd.h>
 
-glug_bool cpu_count_bsd(uint32_t *ncpu)
+uint32_t cpu_count_bsd()
 {
+    uint32_t ncpu = 0;
     int mib[2];
     size_t len = sizeof(ncpu);
 
     mib[0] = CTL_HW;
     mib[1] = HW_NCPU;
-    sysctl(mib, 2, ncpu, &len, (void *)0, 0);
+    sysctl(mib, 2, &ncpu, &len, (void *)0, 0);
 
-    return *ncpu > 0;
+    return ncpu;
 }
 
-glug_bool active_cpus_bsd(uint32_t *ncpu)
+uint32_t active_cpus_bsd()
 {
-    int mib[2];
-    size_t len = sizeof(ncpu), elems = 2;
+    uint32_t ncpu = 0;
 
-#ifdef HW_AVAILCPU
+#if defined(HW_AVAILCPU)
+    int mib[2];
+    size_t len = sizeof(ncpu);
     mib[0] = CTL_HW;
     mib[1] = HW_AVAILCPU;
-#else
-    sysctlbyname("hw.availcpu", mib, &elems, (void *)0, 0);
+    sysctl(mib, 2, &ncpu, &len, (void *)0, 0);
+#elif defined(__FreeBSD__)
+    size_t len = sizeof(ncpu);
+    sysctlbyname("hw.availcpu", &ncpu, &len, (void *)0, 0);
 #endif
-    sysctl(mib, 2, ncpu, &len, (void *)0, 0);
 
-    return *ncpu > 0;
+    return ncpu;
 }
 
-glug_bool physical_mem_bsd(uint64_t *bytes)
+uint64_t physical_mem_bsd()
 {
+    uint64_t bytes = 0;
     int mib[2];
-    size_t len = sizeof(*bytes);
+    size_t len = sizeof(bytes);
 
     mib[0] = CTL_HW;
     mib[1] = HW_PHYSMEM;
-    sysctl(mib, 2, bytes, &len, (void *)0, 0);
+    sysctl(mib, 2, &bytes, &len, (void *)0, 0);
 
-    return *bytes > 0;
+    return bytes;
 }

@@ -2,7 +2,7 @@
 
 enum glug_os os_bsd()
 {
-    return glug_os_unknown;
+    return glug_os_bsd;
 }
 
 glug_bool os_version_bsd(struct glug_plat_version *version)
