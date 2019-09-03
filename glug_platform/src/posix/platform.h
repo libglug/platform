@@ -3,7 +3,7 @@
 
 #include <glug/bool.h>
 #include <glug/platform/os.h>
-#include <glug/platform/version.h>
+#include <glug/platform/version_t.h>
 
 
 enum glug_os    os_posix(void);

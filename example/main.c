@@ -13,8 +13,8 @@ int main(int argc, char **argv)
     (void) argc;
     (void) argv;
 
-    platform = glug_plat_init();
-    system = glug_sys_init();
+    platform = glug_plat_create();
+    system   = glug_sys_create();
 
     glug_plat_os_version(platform, &os_vers);
     glug_plat_kernel_version(platform, &kern_vers);
@@ -29,6 +29,9 @@ int main(int argc, char **argv)
     printf("CPUs: %u\n", ncpu);
     printf("Active CPUs: %u\n", nactive);
     printf("System memory (in bytes): %"PRIu64"\n", memory);
+
+    platform = glug_plat_free(platform);
+    system   = glug_sys_free(system);
 
     return 0;
 }

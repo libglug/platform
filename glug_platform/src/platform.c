@@ -21,11 +21,19 @@ glug_bool glug_plat_kernel_version(struct glug_plat *plat, struct glug_plat_vers
     return plat->kernel_version(version);
 }
 
-struct glug_plat *glug_plat_init(void)
+struct glug_plat *glug_plat_create(void)
 {
     struct glug_plat *plat = malloc(sizeof(struct glug_plat));
     if (plat)
         build_platform(plat);
 
     return plat;
+}
+
+struct glug_plat * glug_plat_free(struct glug_plat *platform)
+{
+    if (platform)
+        free(platform);
+
+    return NULL;
 }

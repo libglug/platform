@@ -2,7 +2,7 @@
 #define GLUG_PLATFORM_LINUX_H
 
 #include <glug/platform/os.h>
-#include <glug/platform/version.h>
+#include <glug/platform/version_t.h>
 
 #include <glug/bool.h>
 

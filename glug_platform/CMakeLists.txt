@@ -26,9 +26,11 @@ list(
     ${COM_ROOT}/os.h
     ${INC_ROOT}/platform.h
     ${INC_ROOT}/platform/os.h
+    ${INC_ROOT}/platform/platform_t.h
     ${INC_ROOT}/platform/platform.h
+    ${INC_ROOT}/platform/system_t.h
     ${INC_ROOT}/platform/system.h
-    ${INC_ROOT}/platform/version.h
+    ${INC_ROOT}/platform/version_t.h
     ${SRC_ROOT}/platform.c
     ${SRC_ROOT}/platform_builder.h
     ${SRC_ROOT}/platform_builder.c
@@ -114,6 +116,7 @@ add_gluglib(
     WIN32_LIBS   Version
     MACOS_LIBS   Foundation
     LINUX_LIBS
+    BSD_LIBS
 )
 
 target_include_directories(

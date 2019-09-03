@@ -17,6 +17,7 @@ function (add_gluglib)
         ${GLUG_WIN32_SOURCE}
         ${GLUG_MACOS_SOURCE}
         ${GLUG_LINUX_SOURCE}
+        ${GLUG_BSD_SOURCE}
     )
 
     # create a list of this platform's sources
@@ -26,7 +27,7 @@ function (add_gluglib)
         list(APPEND PLAT_SOURCE ${GLUG_MACOS_SOURCE})
     elseif (DEFINED GLUG_OS_LINUX)
         list(APPEND PLAT_SOURCE ${GLUG_LINUX_SOURCE})
-    elseif (DEFINED GLUG_OS_FRBSD)
+    elseif (DEFINED GLUG_OS_BSD)
         list(APPEND PLAT_SOURCE ${GLUG_BSD_SOURCE})
     endif()
 

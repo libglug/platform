@@ -7,8 +7,8 @@ using namespace std;
 int main(int, char **)
 {
     glug_plat_version os_vers, kern_vers;
-    glug_plat *platform = glug_plat_init();
-    glug_sys *system = glug_sys_init();
+    glug_plat *platform = glug_plat_create();
+    glug_sys *system    = glug_sys_create();
 
     glug_plat_os_version(platform, &os_vers);
     glug_plat_kernel_version(platform, &kern_vers);
@@ -30,5 +30,8 @@ int main(int, char **)
             "Active CPUs: " << nactive << endl <<
             "System memory (in bytes): " << memory << endl;
 
+
+    platform = glug_plat_free(platform);
+    system   = glug_sys_free(system);
     return 0;
 }

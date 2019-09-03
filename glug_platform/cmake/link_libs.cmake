@@ -12,7 +12,7 @@ function (link_libs TARGET LIBS)
         )
         unset(FOUND_LIB CACHE)
     endforeach()
-    target_link_librarIES(
+    target_link_libraries(
         ${TARGET}
         ${FOUND_LIBS}
     )
