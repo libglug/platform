@@ -1,8 +1,9 @@
-add_subdirectory(CUnit/CUnit EXCLUDE_FROM_ALL)
+add_subdirectory(cunit/CUnit EXCLUDE_FROM_ALL)
 include(add_int_test.cmake)
 include(add_unit_test.cmake)
 
 set(TESTED_LIB glug_platform)
+set(TEST_ROOT .)
 set(SRC_ROOT ../${TESTED_LIB})
 
 list(
@@ -21,6 +22,7 @@ add_int_test(
     SOURCES
         integration/main.c
         create_suite.h
+        create_suite.c
     INCLUDE_DIRS
         ${INCLUDE_DIRS}
     LINK_LIBS
@@ -29,31 +31,25 @@ add_int_test(
 )
 
 # unit tests
-set(MOCK_DIR unit/mocks)
 list(
     APPEND
-    INCLUDE_DIRS
-    ${SRC_ROOT}/src
-)
-list(
-    APPEND
-    MOCKS
-    # add files with mocks
+    TEST_TARGETS
 )
 add_unit_test(
     TARGETNAME
-        unit-makefilename
+        unit-system-linux
     SOURCES
-        # add test source
-        # add source being tested
         create_suite.h
-        ${MOCKS}
+        create_suite.c
+        unit/linux/mocks/unistd.h
+        unit/linux/mocks/unistd.c
+        unit/linux/system.c
+        ${SRC_ROOT}/src/linux/system.c
     INCLUDE_DIRS
-        ${INCLUDE_DIRS}
-    LINK_LIBS
-        CUnit
+        ${TEST_ROOT}
+        ${SRC_ROOT}
+        unit/linux/mocks
 )
-
 
 # create a custom target which builds tests and their dependencies
 # (bug in CMake? (https://gitlab.kitware.com/cmake/cmake/issues/8774))
@@ -61,8 +57,7 @@ add_custom_target(
     check
     ALL
     DEPENDS
-        # add other tests executables here
-        CUnit integration unit-makefilename unit-loadlibs unit-symbols ${TESTED_LIB}
+        CUnit integration ${TEST_TARGETS} ${TESTED_LIB}
 )
 
 # copy the CUnit library to the same directory
@@ -82,22 +77,3 @@ add_custom_command(
         ${CMAKE_COMMAND} -E copy
             $<TARGET_FILE:${TESTED_LIB}> ${CMAKE_CURRENT_BINARY_DIR}
 )
-
-# copy the libraries used in the integration tests
-list(
-    APPEND
-    TEST_LIBS
-    integration/hello.dll
-    integration/hello.dylib
-    integration/hello.so
-)
-
-foreach(TEST_LIB ${TEST_LIBS})
-    add_custom_command(
-        TARGET
-            check POST_BUILD
-        COMMAND
-            ${CMAKE_COMMAND} -E copy
-                ${CMAKE_CURRENT_SOURCE_DIR}/${TEST_LIB} ${CMAKE_CURRENT_BINARY_DIR}
-    )
-endforeach()

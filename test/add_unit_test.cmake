@@ -8,6 +8,8 @@ function(add_unit_test)
         ${UT_SOURCES}
     )
 
+    set(TEST_TARGETS ${TEST_TARGET} ${UT_TARGETNAME} PARENT_SCOPE)
+
     target_compile_definitions(
         ${UT_TARGETNAME}
         PRIVATE
@@ -22,7 +24,7 @@ function(add_unit_test)
 
     target_link_libraries(
         ${UT_TARGETNAME}
-        ${UT_LINK_LIBS}
+        CUnit
     )
 
     target_compile_definitions(

@@ -1,5 +1,6 @@
 #include "system.h"
 
+#include <inttypes.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -38,7 +39,7 @@ uint64_t physical_mem_linux()
 
     if (!meminfo) return 0;
 
-    fscanf(meminfo, "Mem: %lu", &bytes);
+    fscanf(meminfo, "Mem: %"PRIu64"", &bytes);
 
     pclose(meminfo);
     return bytes;
