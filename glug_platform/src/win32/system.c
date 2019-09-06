@@ -30,5 +30,5 @@ uint64_t physical_mem_win(void)
     ULONGLONG bytes = 0;
     GetPhysicallyInstalledSystemMemory(&bytes);
 
-    return bytes;
+    return bytes * 1024;
 }
