@@ -3,8 +3,8 @@
 
 #include <stdio.h>
 
-void set_lscpu_output(const char *);
-void set_lscpu_failure(int);
+void set_popen_output(const char *);
+void set_popen_failure_count(int);
 
 FILE *popen(const char *, const char *);
 int pclose(FILE *);

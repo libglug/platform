@@ -4,14 +4,14 @@
 
 static int should_fail_open = 0;
 
-void set_lscpu_output(const char *cpuline)
+void set_popen_output(const char *cpuline)
 {
     FILE *lscpu = fopen("lscpu", "w");
-    fputs(cpuline, lscpu);
+    fprintf(lscpu, "%s", cpuline);
     fclose(lscpu);
 }
 
-void set_lscpu_failure(int failures)
+void set_popen_failure_count(int failures)
 {
     should_fail_open = failures;
 }
