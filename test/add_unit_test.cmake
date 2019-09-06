@@ -8,7 +8,7 @@ function(add_unit_test)
         ${UT_SOURCES}
     )
 
-    set(TEST_TARGETS ${TEST_TARGET} ${UT_TARGETNAME} PARENT_SCOPE)
+    set(TEST_TARGETS ${TEST_TARGETS} ${UT_TARGETNAME} PARENT_SCOPE)
 
     target_compile_definitions(
         ${UT_TARGETNAME}

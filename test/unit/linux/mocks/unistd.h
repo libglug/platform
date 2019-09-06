@@ -1,5 +1,5 @@
-#ifndef UNIT_UNISTD_H
-#define UNIT_UINSTD_H
+#ifndef MOCK_UNISTD_H
+#define MOCK_UNISTD_H
 
 #include <stdio.h>
 
@@ -9,4 +9,4 @@ void set_popen_failure_count(int);
 FILE *popen(const char *, const char *);
 int pclose(FILE *);
 
-#endif
+#endif // MOCK_UNISTD_H

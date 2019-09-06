@@ -8,43 +8,53 @@
 
 void test_cpus(void)
 {
+    // 8 cpus
     set_popen_output("CPU(s):     8");
     CU_ASSERT_EQUAL(cpu_count_linux(), 8)
 
+    // 2 cpus
     set_popen_output("CPU(s): 2");
     CU_ASSERT_EQUAL(cpu_count_linux(), 2)
 
+    // fail to fetch cpus once
     set_popen_failure_count(1);
     CU_ASSERT_EQUAL(cpu_count_linux(), 0)
     CU_ASSERT_EQUAL(cpu_count_linux(), 2)
 
-    set_popen_output("0");
+    // bad output from popen
+    set_popen_output("garbagetext");
     CU_ASSERT_EQUAL(cpu_count_linux(), 0)
 }
 
 void test_active(void)
 {
+    // 3 active cpus
     set_popen_output("3");
     CU_ASSERT_EQUAL(active_cpus_linux(), 4)
 
+    // fail to fetch active cpus once
     set_popen_failure_count(1);
     CU_ASSERT_EQUAL(active_cpus_linux(), 0)
     CU_ASSERT_EQUAL(active_cpus_linux(), 4)
 
-    set_popen_output("0");
+    // bad output from popen
+    set_popen_output("validcpus124");
     CU_ASSERT_EQUAL(active_cpus_linux(), 0)
 }
 
 void test_memory(void)
 {
+    // 16 Gib
     set_popen_output("Mem: 17179869184");
     CU_ASSERT_EQUAL(physical_mem_linux(), 17179869184)
 
+    // fail to fetch memory
     set_popen_failure_count(1);
     CU_ASSERT_EQUAL(physical_mem_linux(), 0)
     CU_ASSERT_EQUAL(physical_mem_linux(), 17179869184)
 
-    set_popen_output("0");
+    // bad output from popen
+    set_popen_output("ha");
     CU_ASSERT_EQUAL(physical_mem_linux(), 0)
 }
 

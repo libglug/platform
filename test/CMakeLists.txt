@@ -51,6 +51,22 @@ add_unit_test(
         unit/linux/mocks
 )
 
+add_unit_test(
+    TARGETNAME
+        unit-system-win32
+    SOURCES
+        create_suite.h
+        create_suite.c
+        unit/win32/mocks/Windows.h
+        unit/win32/mocks/Windows.c
+        unit/win32/system.c
+        ${SRC_ROOT}/src/win32/system.c
+    INCLUDE_DIRS
+        ${TEST_ROOT}
+        ${SRC_ROOT}
+        unit/win32/mocks
+)
+
 # create a custom target which builds tests and their dependencies
 # (bug in CMake? (https://gitlab.kitware.com/cmake/cmake/issues/8774))
 add_custom_target(
