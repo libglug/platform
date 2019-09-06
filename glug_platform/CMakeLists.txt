@@ -113,7 +113,7 @@ add_gluglib(
     MACOS_SOURCE ${MACOS_SOURCE}
     LINUX_SOURCE ${LINUX_SOURCE}
     BSD_SOURCE   ${BSD_SOURCE}
-    WIN32_LIBS   Version
+    WIN32_LIBS
     MACOS_LIBS   Foundation
     LINUX_LIBS
     BSD_LIBS

@@ -1,8 +1,10 @@
 #include "platform.h"
-
 #include <Windows.h>
 
-typedef void (WINAPI * RtlGetVersion_t) (OSVERSIONINFOEX *);
+typedef void (WINAPI * RtlGetVersion_t)(OSVERSIONINFOEX *);
+typedef DWORD (*GetFileVersionInfoSize_t)(LPCSTR, LPDWORD);
+typedef DWORD (*GetFileVersionInfo_t)(LPCSTR, DWORD, DWORD, LPVOID);
+typedef BOOL (*VerQueryValue_t)(LPCVOID, LPCSTR, LPVOID *, PUINT);
 
 enum glug_os os_win(void)
 {
@@ -16,7 +18,7 @@ glug_bool os_version_win(struct glug_plat_version *version)
     OSVERSIONINFOEX vi = {0};
     vi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 
-    if (ntdll && !(RtlGetVersion = (RtlGetVersion_t)GetProcAddress(ntdll, "RtlGetVersion")))
+    if (!ntdll || !(RtlGetVersion = (RtlGetVersion_t)GetProcAddress(ntdll, TEXT("RtlGetVersion"))))
     {
         FreeLibrary(ntdll);
         return false;
@@ -34,17 +36,34 @@ glug_bool os_version_win(struct glug_plat_version *version)
 
 glug_bool kernel_version_win(struct glug_plat_version *version)
 {
-    DWORD len = GetFileVersionInfoSize(TEXT("Kernel32.dll"), NULL);
-    void *fvi = malloc(len);
+    HANDLE versiondll = LoadLibrary(TEXT("version.dll"));
+    GetFileVersionInfoSize_t GetFileVersionInfoSize = NULL;
+    GetFileVersionInfo_t GetFileVersionInfo = NULL;
+    VerQueryValue_t VerQueryValue = NULL;
+    DWORD len = 0;
+    void *fvi = NULL;
     PUINT bytes = 0;
     LPVOID vqv;
 
-    GetFileVersionInfo(TEXT("Kernel32.dll"), 0, len, fvi);
+    if (!versiondll ||
+        !(GetFileVersionInfoSize = (GetFileVersionInfoSize_t)GetProcAddress(versiondll, TEXT("GetFileVersionInfoSizeA"))) ||
+        !(GetFileVersionInfo = (GetFileVersionInfo_t)GetProcAddress(versiondll, TEXT("GetFileVersionInfoA"))) ||
+        !(VerQueryValue = (VerQueryValue_t)GetProcAddress(versiondll, TEXT("VerQueryValueA"))))
+    {
+        FreeLibrary(versiondll);
+        return false;
+    }
+
+    len = GetFileVersionInfoSize("Kernel32.dll", NULL);
+    fvi = malloc(len);
+
+    GetFileVersionInfo("Kernel32.dll", 0, len, fvi);
     if (!VerQueryValue(fvi, "\\", &vqv, bytes))
     {
         free(fvi);
         return false;
     }
+    FreeLibrary(versiondll);
 
     VS_FIXEDFILEINFO *file_info = (VS_FIXEDFILEINFO *)vqv;
     version->major = HIWORD(file_info->dwFileVersionMS);
