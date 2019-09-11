@@ -6,30 +6,6 @@ set(TESTED_LIB glug_platform)
 set(TEST_ROOT .)
 set(SRC_ROOT ../${TESTED_LIB})
 
-list(
-    APPEND
-    INCLUDE_DIRS
-    CUnit/CUnit/include
-    ${SRC_ROOT}/common_headers/include
-    ${SRC_ROOT}/include
-)
-
-# integration test
-find_package(${TESTED_LIB} REQUIRED)
-add_int_test(
-    TARGETNAME
-        integration
-    SOURCES
-        integration/main.c
-        create_suite.h
-        create_suite.c
-    INCLUDE_DIRS
-        ${INCLUDE_DIRS}
-    LINK_LIBS
-        CUnit
-        ${TESTED_LIB}
-)
-
 # unit tests
 list(
     APPEND
@@ -73,7 +49,7 @@ add_custom_target(
     check
     ALL
     DEPENDS
-        CUnit integration ${TEST_TARGETS} ${TESTED_LIB}
+        CUnit ${TEST_TARGETS} ${TESTED_LIB}
 )
 
 # copy the CUnit library to the same directory
@@ -83,13 +59,4 @@ add_custom_command(
     COMMAND
         ${CMAKE_COMMAND} -E copy
             $<TARGET_FILE:CUnit> ${CMAKE_CURRENT_BINARY_DIR}
-)
-
-# copy the target lib for integration tests
-add_custom_command(
-    TARGET
-        integration POST_BUILD
-    COMMAND
-        ${CMAKE_COMMAND} -E copy
-            $<TARGET_FILE:${TESTED_LIB}> ${CMAKE_CURRENT_BINARY_DIR}
 )
