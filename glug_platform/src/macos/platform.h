@@ -9,4 +9,7 @@ enum glug_os    os_mac(void);
 glug_bool       os_version_mac(struct glug_plat_version *);
 glug_bool       kernel_version_mac(struct glug_plat_version *);
 
+glug_bool       supports_nsprocess_operatingsystemversion();
+glug_bool       os_version_fallback_mac(struct glug_plat_version *);
+
 #endif // GLUG_PLATFORM_MACOS_H

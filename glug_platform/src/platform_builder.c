@@ -20,7 +20,7 @@ void build_platform(struct glug_plat *platform)
 void build_platform(struct glug_plat *platform)
 {
     platform->os = os_mac;
-    platform->os_version = os_version_mac;
+    platform->os_version = supports_nsprocess_operatingsystemversion() ? os_version_mac : os_version_fallback_mac;
     platform->kernel_version = kernel_version_mac;
 }
 

@@ -11,8 +11,6 @@ enum glug_os os_mac(void)
 
 glug_bool os_version_mac(struct glug_plat_version *version)
 {
-    if ([NSProcessInfo instancesRespondToSelector: @selector(operatingSystemVersion)] != YES) return false;
-
     NSOperatingSystemVersion os_vers = [[NSProcessInfo processInfo] operatingSystemVersion];
     version->major = (uint32_t)os_vers.majorVersion;
     version->minor = (uint32_t)os_vers.minorVersion;
@@ -27,6 +25,23 @@ glug_bool kernel_version_mac(struct glug_plat_version *version)
     uname(&utsname);
 
     sscanf(utsname.release, "%u.%u.%u", &version->major, &version->minor, &version->patch);
+
+    return true;
+}
+
+glug_bool supports_nsprocess_operatingsystemversion()
+{
+    return [NSProcessInfo instancesRespondToSelector: @selector(operatingSystemVersion)] == YES;
+}
+
+glug_bool os_version_fallback_mac(struct glug_plat_version *version)
+{
+    FILE *sw_vers = popen("sw_vers -productVersion", "r");
+
+    if (!sw_vers) return false;
+
+    fscanf(sw_vers, "%u.%u.%u", &version->major, &version->minor, &version->patch);
+    pclose(sw_vers);
 
     return true;
 }
