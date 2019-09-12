@@ -13,8 +13,9 @@ struct glug_plat *glug_plat_create(void)
     return plat;
 }
 
-struct glug_plat * glug_plat_free(struct glug_plat *platform)
+struct glug_plat *glug_plat_free(struct glug_plat *platform)
 {
+    free_platform(platform);
     if (platform)
         free(platform);
 
@@ -23,17 +24,17 @@ struct glug_plat * glug_plat_free(struct glug_plat *platform)
 
 enum glug_os glug_plat_os(struct glug_plat *plat)
 {
-    return plat->os();
+    return plat->os(&plat->plat_context);
 }
 
 glug_bool glug_plat_os_version(struct glug_plat *plat, struct glug_plat_version *version)
 {
     memset(version, 0, sizeof(struct glug_plat_version));
-    return plat->os_version(version);
+    return plat->os_version(version, &plat->plat_context);
 }
 
 glug_bool glug_plat_kernel_version(struct glug_plat *plat, struct glug_plat_version *version)
 {
     memset(version, 0, sizeof(struct glug_plat_version));
-    return plat->kernel_version(version);
+    return plat->kernel_version(version, &plat->plat_context);
 }

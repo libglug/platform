@@ -5,14 +5,22 @@
 #include <glug/platform/version_t.h>
 
 #include <glug/bool.h>
+#include <glug/os.h>
+
+#if defined(GLUG_OS_WIN)
+#include "win32/platform_context.h"
+typedef struct win32_context plat_context;
+#endif
 
 struct glug_plat
 {
-    enum glug_os (*os)(void);
-    glug_bool    (*os_version)(struct glug_plat_version *);
-    glug_bool    (*kernel_version)(struct glug_plat_version *);
+    enum glug_os (*os)(const plat_context *);
+    glug_bool    (*os_version)(struct glug_plat_version *, const plat_context *);
+    glug_bool    (*kernel_version)(struct glug_plat_version *, const plat_context *);
+    plat_context plat_context;
 };
 
 void build_platform(struct glug_plat *);
+void free_platform(struct glug_plat *);
 
 #endif // GLUG_PLATFORM_PLATFORM_H

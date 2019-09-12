@@ -77,6 +77,11 @@ void build_platform(struct glug_plat *platform)
     platform->kernel_version = kernel_version_mac;
 }
 
+void free_platform(struct glug_plat *platform)
+{
+    
+}
+
 #elif defined(GLUG_OS_LIN)
 
 #include "linux/platform.h"

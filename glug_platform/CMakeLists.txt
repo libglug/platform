@@ -56,6 +56,7 @@ list(
     APPEND
     WIN32_SOURCE
     ${COMMON_SOURCE}
+    ${WIN32_ROOT}/platform_context.h
     ${WIN32_ROOT}/platform.h
     ${WIN32_ROOT}/platform.c
     ${WIN32_ROOT}/system.h

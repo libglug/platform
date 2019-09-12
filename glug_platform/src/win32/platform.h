@@ -5,8 +5,10 @@
 #include <glug/platform/os.h>
 #include <glug/platform/version_t.h>
 
-enum glug_os    os_win(void);
-glug_bool       os_version_win(struct glug_plat_version *);
-glug_bool       kernel_version_win(struct glug_plat_version *);
+#include "platform_context.h"
+
+enum glug_os    os_win(const struct win32_context *);
+glug_bool       os_version_win(struct glug_plat_version *, const struct win32_context *);
+glug_bool       kernel_version_win(struct glug_plat_version *, const struct win32_context *);
 
 #endif // GLUG_PLATFORM_WIN32_H
