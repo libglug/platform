@@ -5,11 +5,13 @@
 #include <glug/platform/os.h>
 #include <glug/platform/version_t.h>
 
-enum glug_os    os_mac(void);
-glug_bool       os_version_mac(struct glug_plat_version *);
-glug_bool       kernel_version_mac(struct glug_plat_version *);
+#include "platform_context.h"
 
-glug_bool       supports_nsprocess_operatingsystemversion();
-glug_bool       os_version_fallback_mac(struct glug_plat_version *);
+enum glug_os    os_mac(const struct macos_context *);
+glug_bool       os_version_mac(struct glug_plat_version *, const struct macos_context *);
+glug_bool       kernel_version_mac(struct glug_plat_version *, const struct macos_context *);
+
+glug_bool       responds_to_osversion();
+glug_bool       os_version_fallback_mac(struct glug_plat_version *, const struct macos_context *);
 
 #endif // GLUG_PLATFORM_MACOS_H

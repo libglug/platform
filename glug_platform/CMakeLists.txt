@@ -69,6 +69,7 @@ list(
     APPEND
     MACOS_SOURCE
     ${COMMON_SOURCE}
+    ${MACOS_ROOT}/platform_context.h
     ${MACOS_ROOT}/platform.h
     ${MACOS_ROOT}/platform.m
     ${MACOS_ROOT}/system.h

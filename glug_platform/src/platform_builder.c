@@ -54,7 +54,7 @@ void build_platform(struct glug_plat *platform)
     platform->plat_context = context;
 }
 
-void free_platform(struct glug_plat *platform)
+void teardown_platform(struct glug_plat *platform)
 {
     if (platform)
     {
@@ -73,8 +73,13 @@ void free_platform(struct glug_plat *platform)
 void build_platform(struct glug_plat *platform)
 {
     platform->os = os_mac;
-    platform->os_version = supports_nsprocess_operatingsystemversion() ? os_version_mac : os_version_fallback_mac;
+    platform->os_version = responds_to_osversion() ? os_version_mac : os_version_fallback_mac;
     platform->kernel_version = kernel_version_mac;
+}
+
+void teardown_platform(struct glug_plat *platform)
+{
+    (void) platform;
 }
 
 #elif defined(GLUG_OS_LIN)

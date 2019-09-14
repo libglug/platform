@@ -15,7 +15,7 @@ struct glug_plat *glug_plat_create(void)
 
 struct glug_plat *glug_plat_free(struct glug_plat *platform)
 {
-    free_platform(platform);
+    teardown_platform(platform);
     if (platform)
         free(platform);
 

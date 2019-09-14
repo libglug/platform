@@ -10,6 +10,9 @@
 #if defined(GLUG_OS_WIN)
 #include "win32/platform_context.h"
 typedef struct win32_context plat_context;
+#elif defined(GLUG_OS_MAC)
+#include "macos/platform_context.h"
+typedef struct macos_context plat_context;
 #endif
 
 struct glug_plat
@@ -21,6 +24,6 @@ struct glug_plat
 };
 
 void build_platform(struct glug_plat *);
-void free_platform(struct glug_plat *);
+void teardown_platform(struct glug_plat *);
 
 #endif // GLUG_PLATFORM_PLATFORM_H
