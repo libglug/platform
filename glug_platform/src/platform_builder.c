@@ -87,11 +87,67 @@ void teardown_platform(struct glug_plat *platform)
 #include "linux/platform.h"
 #include "posix/platform.h"
 
+#include <dlfcn.h>
+
+static enum glug_os get_os_linux(const plat_context *context)
+{
+    return os_linux(&context->lin);
+}
+
+static glug_bool get_os_version_linux(struct glug_plat_version *version, const plat_context *context)
+{
+    return os_version_linux(version, &context->lin);
+}
+
+static glug_bool get_os_version_posix(struct glug_plat_version *version, const plat_context *context)
+{
+    return os_version_posix(version, &context->pos);
+}
+
+static glug_bool get_kernel_version_linux(struct glug_plat_version *version, const plat_context *context)
+{
+    return kernel_version_linux(version, &context->lin);
+}
+
+static glug_bool get_kernel_version_posix(struct glug_plat_version *version, const plat_context *context)
+{
+    return kernel_version_posix(version, &context->pos);
+}
+
+#include <string.h>
+
 void build_platform(struct glug_plat *platform)
 {
-    platform->os = os_linux;
-    platform->os_version = os_version_linux;
-    platform->kernel_version = kernel_version_linux;
+    FILE *proc_version = NULL;
+    plat_context *context = &platform->plat_context;
+    void *libc = dlopen(0, RTLD_NOW);
+
+    platform->os = get_os_linux;
+    platform->os_version = (unused_context)os_version_null;
+    platform->kernel_version = (unused_context)os_version_null;
+
+    if (libc)
+    {
+        int (*uname)(struct utsname *) = (int (*)(struct utsname *))dlsym(libc, "uname");
+        if (uname)
+        {
+            context->pos.uname = uname;
+            platform->kernel_version = get_kernel_version_posix;
+        }
+    }
+    else if ((proc_version = fopen("/proc/version", "r")))
+    {
+        context->lin.proc_version = proc_version;
+        platform->kernel_version = get_kernel_version_linux;
+    }
+
+    dlclose(libc);
+}
+
+void teardown_platform(struct glug_plat *platform)
+{
+    if (platform->plat_context.lin.proc_version)
+        fclose(platform->plat_context.lin.proc_version);
 }
 
 #elif defined(GLUG_OS_BSD)

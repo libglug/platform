@@ -3,7 +3,7 @@
 
 struct macos_context
 {
-    void *unused;
+    void *__placeholder;
 };
 
 #endif // MACOS_PLATFORM_CONTEXT_H

@@ -5,8 +5,10 @@
 #include <glug/platform/os.h>
 #include <glug/platform/version_t.h>
 
-enum glug_os    os_posix(void);
-glug_bool       os_version_posix(struct glug_plat_version *);
-glug_bool       kernel_version_posix(struct glug_plat_version *);
+struct posix_context;
+
+enum glug_os    os_posix(const struct posix_context *);
+glug_bool       os_version_posix(struct glug_plat_version *, const struct posix_context *);
+glug_bool       kernel_version_posix(struct glug_plat_version *, const struct posix_context *);
 
 #endif // GLUG_SYSTEM_POSIX_H

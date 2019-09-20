@@ -1,6 +1,7 @@
 #include "platform.h"
-#include <Windows.h>
+#include "platform_context.h"
 
+#include <Windows.h>
 #include <stdlib.h>
 
 enum glug_os os_win(const struct win32_context *context)

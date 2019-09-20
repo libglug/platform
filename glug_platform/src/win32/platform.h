@@ -5,7 +5,7 @@
 #include <glug/platform/os.h>
 #include <glug/platform/version_t.h>
 
-#include "platform_context.h"
+struct win32_context;
 
 enum glug_os    os_win(const struct win32_context *);
 glug_bool       os_version_win(struct glug_plat_version *, const struct win32_context *);

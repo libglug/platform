@@ -1,4 +1,5 @@
 #import "platform.h"
+#import "platform_context.h"
 
 #import <sys/utsname.h>
 #import <stdio.h>
@@ -32,7 +33,7 @@ glug_bool kernel_version_mac(struct glug_plat_version *version, const struct mac
     return true;
 }
 
-glug_bool responds_to_osversion()
+glug_bool responds_to_osversion(void)
 {
     return [NSProcessInfo instancesRespondToSelector: @selector(operatingSystemVersion)] == YES;
 }

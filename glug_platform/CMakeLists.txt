@@ -84,10 +84,12 @@ list(
     APPEND
     LINUX_SOURCE
     ${COMMON_SOURCE}
+    ${LINUX_ROOT}/platform_context.h
     ${LINUX_ROOT}/platform.h
     ${LINUX_ROOT}/platform.c
     ${LINUX_ROOT}/system.h
     ${LINUX_ROOT}/system.c
+    ${POSIX_ROOT}/platform_context.h
     ${POSIX_ROOT}/platform.h
     ${POSIX_ROOT}/platform.c
     ${POSIX_ROOT}/system.h
@@ -117,7 +119,7 @@ add_gluglib(
     BSD_SOURCE   ${BSD_SOURCE}
     WIN32_LIBS
     MACOS_LIBS   Foundation
-    LINUX_LIBS
+    LINUX_LIBS   dl
     BSD_LIBS
 )
 
