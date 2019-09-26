@@ -11,8 +11,6 @@ typedef BOOL (*VerQueryValue_t)(LPCVOID, LPCSTR, LPVOID *, PUINT);
 
 struct win32_context
 {
-    HANDLE ntdll;
-    HANDLE versiondll;
     RtlGetVersion_t rtl_get_version;
     GetFileVersionInfoSize_t get_version_info_size;
     GetFileVersionInfo_t get_version_info;

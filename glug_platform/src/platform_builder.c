@@ -12,14 +12,28 @@ typedef glug_bool (*unused_context)(struct glug_plat_version *, const plat_conte
 #define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 
+static enum glug_os get_os_win(const plat_context *context)
+{
+    return os_win(&context->win);
+}
+
+static glug_bool get_os_version_win(struct glug_plat_version *version, const plat_context *context)
+{
+    return os_version_win(version, &context->win);
+}
+
+static glug_bool get_kernel_version_win(struct glug_plat_version *version, const plat_context *context)
+{
+    return kernel_version_win(version, &context->win);
+}
+
 void build_platform(struct glug_plat *platform)
 {
-    struct win32_context context;
     HANDLE ntdll = LoadLibrary(TEXT("ntdll.dll"));
     HANDLE versiondll = LoadLibrary(TEXT("version.dll"));
-    memset(&context, 0, sizeof(struct win32_context));
+    plat_context *context = &platform->plat_context;
 
-    platform->os = os_win;
+    platform->os = get_os_win;
     platform->os_version = (unused_context)os_version_null;
     platform->kernel_version = (unused_context)os_version_null;
 
@@ -28,11 +42,11 @@ void build_platform(struct glug_plat *platform)
         RtlGetVersion_t get_version = (RtlGetVersion_t)GetProcAddress(ntdll, TEXT("RtlGetVersion"));
         if (get_version)
         {
-            context.rtl_get_version = get_version;
-            platform->os_version = os_version_win;
+            context->win.rtl_get_version = get_version;
+            platform->os_version = get_os_version_win;
         }
 
-        context.ntdll = ntdll;
+        context->ntdll = ntdll;
     }
 
     if (versiondll)
@@ -42,16 +56,14 @@ void build_platform(struct glug_plat *platform)
         FARPROC ver_query    = GetProcAddress(versiondll, TEXT("VerQueryValueA"));
         if (get_ver_size && get_ver_info && ver_query)
         {
-            context.get_version_info_size = (GetFileVersionInfoSize_t )get_ver_size;
-            context.get_version_info      = (GetFileVersionInfo_t)get_ver_info;
-            context.version_query_value   = (VerQueryValue_t)ver_query;
-            platform->kernel_version      = kernel_version_win;
+            context->win.get_version_info_size = (GetFileVersionInfoSize_t )get_ver_size;
+            context->win.get_version_info      = (GetFileVersionInfo_t)get_ver_info;
+            context->win.version_query_value   = (VerQueryValue_t)ver_query;
+            platform->kernel_version           = get_kernel_version_win;
         }
 
-        context.versiondll = versiondll;
+        context->versiondll = versiondll;
     }
-
-    platform->plat_context = context;
 }
 
 void teardown_platform(struct glug_plat *platform)
@@ -121,6 +133,7 @@ void build_platform(struct glug_plat *platform)
     FILE *proc_version = NULL;
     plat_context *context = &platform->plat_context;
     void *libc = dlopen(0, RTLD_NOW);
+
 
     platform->os = get_os_linux;
     platform->os_version = (unused_context)os_version_null;

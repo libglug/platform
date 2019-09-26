@@ -9,7 +9,11 @@
 
 #if defined(GLUG_OS_WIN)
 #include "win32/platform_context.h"
-typedef struct win32_context plat_context;
+typedef struct {
+    HANDLE ntdll;
+    HANDLE versiondll;
+    struct win32_context win;
+} plat_context;
 #elif defined(GLUG_OS_MAC)
 #include "macos/platform_context.h"
 typedef struct macos_context plat_context;
