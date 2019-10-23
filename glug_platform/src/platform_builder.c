@@ -130,10 +130,9 @@ static glug_bool get_kernel_version_posix(struct glug_plat_version *version, con
 
 void build_platform(struct glug_plat *platform)
 {
-    FILE *proc_version = NULL;
+    FILE *proc_version = NULL, *lsb_release = NULL;
     plat_context *context = &platform->plat_context;
     void *libc = dlopen(0, RTLD_NOW);
-
 
     platform->os = get_os_linux;
     platform->os_version = (unused_context)os_version_null;
@@ -154,6 +153,12 @@ void build_platform(struct glug_plat *platform)
         platform->kernel_version = get_kernel_version_linux;
     }
 
+    if ((lsb_release = fopen("/etc/lsb-release", "r")))
+    {
+        context->pos.lsb_release = lsb_release;
+        platform->os_version = get_os_version_posix;
+    }
+
     dlclose(libc);
 }
 
@@ -161,6 +166,9 @@ void teardown_platform(struct glug_plat *platform)
 {
     if (platform->plat_context.lin.proc_version)
         fclose(platform->plat_context.lin.proc_version);
+
+    if (platform->plat_context.pos.lsb_release)
+        fclose(platform->plat_context.pos.lsb_release);
 }
 
 #elif defined(GLUG_OS_BSD)

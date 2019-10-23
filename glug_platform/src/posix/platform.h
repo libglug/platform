@@ -7,7 +7,6 @@
 
 struct posix_context;
 
-enum glug_os    os_posix(const struct posix_context *);
 glug_bool       os_version_posix(struct glug_plat_version *, const struct posix_context *);
 glug_bool       kernel_version_posix(struct glug_plat_version *, const struct posix_context *);
 
