@@ -13,8 +13,10 @@ include(cmake/add_gluglib.cmake)
 option(BUILD_STATIC "Build as a static library instead of shared" "OFF")
 
 set(COM_ROOT common_headers/include/glug)
-set(SRC_ROOT src)
 set(INC_ROOT include/glug)
+set(SRC_ROOT src)
+set(PLAT_ROOT ${SRC_ROOT}/platform)
+set(SYS_ROOT ${SRC_ROOT}/system)
 
 list(
     APPEND
@@ -31,83 +33,93 @@ list(
     ${INC_ROOT}/platform/system_t.h
     ${INC_ROOT}/platform/system.h
     ${INC_ROOT}/platform/version_t.h
-    ${SRC_ROOT}/platform.c
-    ${SRC_ROOT}/platform_builder.h
-    ${SRC_ROOT}/platform_builder.c
-    ${SRC_ROOT}/system.c
-    ${SRC_ROOT}/system_builder.h
-    ${SRC_ROOT}/system_builder.c
+    ${PLAT_ROOT}/platform.c
+    ${PLAT_ROOT}/platform_builder.h
+    ${PLAT_ROOT}/platform_builder_null.c
+    ${PLAT_ROOT}/platform_builder_win32.c
+    ${PLAT_ROOT}/platform_builder_macos.c
+    ${PLAT_ROOT}/platform_builder_linux.c
+    ${PLAT_ROOT}/platform_builder_bsd.c
+    ${SYS_ROOT}/system.c
+    ${SYS_ROOT}/system_builder.h
+    ${SYS_ROOT}/system_builder.c
 )
 
 # NULL sources
-set (NULL_ROOT ${SRC_ROOT}/null)
+set (NULL_PLAT_ROOT ${PLAT_ROOT}/null)
+set (NULL_SYS_ROOT ${SYS_ROOT}/null)
 list(
     APPEND
     COMMON_SOURCE
-    ${NULL_ROOT}/platform.h
-    ${NULL_ROOT}/platform.c
-    ${NULL_ROOT}/system.h
-    ${NULL_ROOT}/system.c
+    ${NULL_PLAT_ROOT}/platform_context.h
+    ${NULL_PLAT_ROOT}/platform.h
+    ${NULL_PLAT_ROOT}/platform.c
+    ${NULL_SYS_ROOT}/system.h
+    ${NULL_SYS_ROOT}/system.c
 )
 
 # Windows sources
-set(WIN32_ROOT ${SRC_ROOT}/win32)
+set(WIN32_PLAT_ROOT ${PLAT_ROOT}/win32)
+set(WIN32_SYS_ROOT ${SYS_ROOT}/win32)
 list(
     APPEND
     WIN32_SOURCE
     ${COMMON_SOURCE}
-    ${WIN32_ROOT}/platform_context.h
-    ${WIN32_ROOT}/platform.h
-    ${WIN32_ROOT}/platform.c
-    ${WIN32_ROOT}/system.h
-    ${WIN32_ROOT}/system.c
+    ${WIN32_PLAT_ROOT}/platform_context.h
+    ${WIN32_PLAT_ROOT}/platform.h
+    ${WIN32_PLAT_ROOT}/platform.c
+    ${WIN32_SYS_ROOT}/system.h
+    ${WIN32_SYS_ROOT}/system.c
 )
 
 # Mac OS sources
-set(MACOS_ROOT ${SRC_ROOT}/macos)
+set(MACOS_PLAT_ROOT ${PLAT_ROOT}/macos)
+set(MACOS_SYS_ROOT ${SYS_ROOT}/macos)
 list(
     APPEND
     MACOS_SOURCE
     ${COMMON_SOURCE}
-    ${MACOS_ROOT}/platform_context.h
-    ${MACOS_ROOT}/platform.h
-    ${MACOS_ROOT}/platform.m
-    ${MACOS_ROOT}/system.h
-    ${MACOS_ROOT}/system.m
-
+    ${MACOS_PLAT_ROOT}/platform_context.h
+    ${MACOS_PLAT_ROOT}/platform.h
+    ${MACOS_PLAT_ROOT}/platform.m
+    ${MACOS_SYS_ROOT}/system.h
+    ${MACOS_SYS_ROOT}/system.m
 )
 
 # Linux sources
-set(LINUX_ROOT ${SRC_ROOT}/linux)
-set(POSIX_ROOT ${SRC_ROOT}/posix)
+set(LINUX_PLAT_ROOT ${PLAT_ROOT}/linux)
+set(LINUX_SYS_ROOT ${SYS_ROOT}/linux)
+set(POSIX_PLAT_ROOT ${PLAT_ROOT}/posix)
+set(POSIX_SYS_ROOT ${SYS_ROOT}/posix)
 list(
     APPEND
     LINUX_SOURCE
     ${COMMON_SOURCE}
-    ${LINUX_ROOT}/platform_context.h
-    ${LINUX_ROOT}/platform.h
-    ${LINUX_ROOT}/platform.c
-    ${LINUX_ROOT}/system.h
-    ${LINUX_ROOT}/system.c
-    ${POSIX_ROOT}/platform_context.h
-    ${POSIX_ROOT}/platform.h
-    ${POSIX_ROOT}/platform.c
-    ${POSIX_ROOT}/system.h
-    ${POSIX_ROOT}/system.c
+    ${LINUX_PLAT_ROOT}/platform_context.h
+    ${LINUX_PLAT_ROOT}/platform.h
+    ${LINUX_PLAT_ROOT}/platform.c
+    ${LINUX_SYS_ROOT}/system.h
+    ${LINUX_SYS_ROOT}/system.c
+    ${POSIX_PLAT_ROOT}/platform_context.h
+    ${POSIX_PLAT_ROOT}/platform.h
+    ${POSIX_PLAT_ROOT}/platform.c
+    ${POSIX_SYS_ROOT}/system.h
+    ${POSIX_SYS_ROOT}/system.c
 )
 
 # BSD sources
-set(BSD_ROOT ${SRC_ROOT}/bsd)
+set(BSD_PLAT_ROOT ${PLAT_ROOT}/bsd)
+set(BSD_SYS_ROOT ${SYS_ROOT}/bsd)
 list(
     APPEND
     BSD_SOURCE
     ${COMMON_SOURCE}
-    ${BSD_ROOT}/platform.h
-    ${BSD_ROOT}/platform.c
-    ${BSD_ROOT}/system.h
-    ${BSD_ROOT}/system.c
-    ${POSIX_ROOT}/system.h
-    ${POSIX_ROOT}/system.c
+    ${BSD_PLAT_ROOT}/platform.h
+    ${BSD_PLAT_ROOT}/platform.c
+    ${BSD_SYS_ROOT}/system.h
+    ${BSD_SYS_ROOT}/system.c
+    ${POSIX_SYS_ROOT}/system.h
+    ${POSIX_SYS_ROOT}/system.c
 )
 
 add_gluglib(

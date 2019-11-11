@@ -1,7 +1,6 @@
 #ifndef GLUG_SYSTEM_BUILDER_H
 #define GLUG_SYSTEM_BUILDER_H
 
-#include <glug/bool.h>
 #include <stdint.h>
 
 struct win32_context

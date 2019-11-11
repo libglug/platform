@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-glug_bool os_version_posix(struct glug_plat_version *version, const struct posix_context *context)
+void os_version_posix(struct glug_plat_version *version, const struct posix_context *context)
 {
     // lsb, not posix, but who's keeping track?
     FILE *lsb_release = context->lsb_release;
@@ -20,24 +20,20 @@ glug_bool os_version_posix(struct glug_plat_version *version, const struct posix
         if (!strcmp(tmp, "DISTRIB_RELEASE"))
         {
             fscanf(lsb_release, "=%u.%u.%u.%u", &version->major, &version->minor, &version->patch, &ntmp);
-            return true;
+            return;
         }
         // advance to next line
         fscanf(lsb_release, "%*[^\n]");
     }
-
-    return false;
 }
 
-glug_bool kernel_version_posix(struct glug_plat_version *version, const struct posix_context *context)
+void kernel_version_posix(struct glug_plat_version *version, const struct posix_context *context)
 {
     struct utsname utsname;
     int res = context->uname(&utsname);
 
     if (res == -1)
-        return false;
+        return;
 
     sscanf(utsname.release, "%u.%u.%u", &version->major, &version->minor, &version->patch);
-
-    return true;
 }

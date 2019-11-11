@@ -2,7 +2,7 @@
 
 #include <glug/os.h>
 
-#if defined(GLUG_OS_WIN)
+#if GLUG_OS == GLUG_OS_WIN
 
 #include "win32/system.h"
 
@@ -12,7 +12,7 @@ void build_system(struct glug_sys *system)
     system->active_cpus = active_cpus_win;
     system->physical_mem = physical_mem_win;
 }
-#elif defined(GLUG_OS_MAC)
+#elif GLUG_OS == GLUG_OS_MAC
 
 #include "macos/system.h"
 
@@ -23,7 +23,7 @@ void build_system(struct glug_sys *system)
     system->physical_mem = physical_mem_mac;
 }
 
-#elif defined(GLUG_OS_LIN)
+#elif GLUG_OS == GLUG_OS_LIN
 
 #include "linux/system.h"
 #include "posix/system.h"
@@ -35,7 +35,7 @@ void build_system(struct glug_sys *system)
     system->physical_mem = physical_mem_posix() ? physical_mem_posix : physical_mem_linux;
 }
 
-#elif defined(GLUG_OS_BSD)
+#elif GLUG_OS == GLUG_OS_BSD
 
 #include "bsd/system.h"
 #if __POSIX_VISIBLE

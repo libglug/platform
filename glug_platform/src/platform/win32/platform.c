@@ -7,10 +7,11 @@
 enum glug_os os_win(const struct win32_context *context)
 {
     (void) context;
+
     return glug_os_windows;
 }
 
-glug_bool os_version_win(struct glug_plat_version *version, const struct win32_context *context)
+void os_version_win(struct glug_plat_version *version, const struct win32_context *context)
 {
     OSVERSIONINFOEX vi = {0};
     vi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
@@ -20,11 +21,9 @@ glug_bool os_version_win(struct glug_plat_version *version, const struct win32_c
     version->major = vi.dwMajorVersion;
     version->minor = vi.dwMinorVersion;
     version->patch = vi.wServicePackMajor;
-
-    return true;
 }
 
-glug_bool kernel_version_win(struct glug_plat_version *version, const struct win32_context *context)
+void kernel_version_win(struct glug_plat_version *version, const struct win32_context *context)
 {
     DWORD len = 0;
     void *fvi = NULL;
@@ -38,7 +37,7 @@ glug_bool kernel_version_win(struct glug_plat_version *version, const struct win
     if (!context->version_query_value(fvi, "\\", &vqv, bytes))
     {
         free(fvi);
-        return false;
+        return;
     }
 
     VS_FIXEDFILEINFO *file_info = (VS_FIXEDFILEINFO *)vqv;
@@ -46,6 +45,4 @@ glug_bool kernel_version_win(struct glug_plat_version *version, const struct win
     version->minor = LOWORD(file_info->dwFileVersionMS);
     version->patch = HIWORD(file_info->dwFileVersionLS);
     free(fvi);
-
-    return true;
 }

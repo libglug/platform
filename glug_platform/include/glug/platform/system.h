@@ -3,7 +3,6 @@
 
 #include <glug/import.h>
 #include <glug/extern.h>
-#include <glug/bool.h>
 
 #include <glug/platform/system_t.h>
 #include <stdint.h>
