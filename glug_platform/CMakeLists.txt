@@ -42,7 +42,11 @@ list(
     ${PLAT_ROOT}/platform_builder_bsd.c
     ${SYS_ROOT}/system.c
     ${SYS_ROOT}/system_builder.h
-    ${SYS_ROOT}/system_builder.c
+    ${SYS_ROOT}/system_builder_null.c
+    ${SYS_ROOT}/system_builder_win32.c
+    ${SYS_ROOT}/system_builder_macos.c
+    ${SYS_ROOT}/system_builder_linux.c
+    ${SYS_ROOT}/system_builder_bsd.c
 )
 
 # NULL sources

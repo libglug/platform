@@ -1,8 +1,7 @@
+#include "platform_builder.h"
 #include <glug/os.h>
 
 #if GLUG_OS == GLUG_OS_LIN
-
-#include "platform_builder.h"
 #include "linux/platform.h"
 #include "posix/platform.h"
 

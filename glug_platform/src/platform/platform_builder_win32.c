@@ -1,8 +1,7 @@
+#include "platform_builder.h"
 #include <glug/os.h>
 
 #if GLUG_OS == GLUG_OS_WIN
-
-#include "platform_builder.h"
 #include "win32/platform.h"
 
 #define WIN32_LEAN_AND_MEAN
