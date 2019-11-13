@@ -5,14 +5,37 @@
 #include <stdlib.h>
 #include <string.h>
 
+static enum glug_os get_os_null(const plat_context *context)
+{
+    (void) context;
+
+    return os_null();
+}
+
+static void get_os_version_null(struct glug_plat_version *version, const plat_context *context)
+{
+    (void) version;
+    (void) context;
+
+    os_version_null();
+}
+
+static void get_kernel_version_null(struct glug_plat_version *version, const plat_context *context)
+{
+    (void) version;
+    (void) context;
+
+    kernel_version_null();
+}
+
 struct glug_plat *glug_plat_create(void)
 {
     struct glug_plat *plat = malloc(sizeof(struct glug_plat));
     if (plat)
     {
-        plat->os = os_null;
-        plat->os_version = os_version_null;
-        plat->kernel_version = kernel_version_null;
+        plat->os = get_os_null;
+        plat->os_version = get_os_version_null;
+        plat->kernel_version = get_kernel_version_null;
         build_platform(plat);
     }
 

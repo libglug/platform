@@ -2,34 +2,46 @@
 #define GLUG_SYSTEM_BUILDER_H
 
 #include <stdint.h>
+#include <glug/os.h>
 
-struct win32_context
-{
-    void (*a)(void);
-    void (*b)(void);
-};
+#if GLUG_OS == GLUG_OS_WIN
 
-struct macos_context
-{
-    void (*c)(int);
-    void (*d)(int);
-};
+#include "win32/system_context.h"
+typedef struct win32_context sys_context;
 
-union sys_context
+#elif GLUG_OS == GLUG_OS_MAC
+
+#include "macos/system_context.h"
+typedef struct macos_context sys_context;
+
+#elif GLUG_OS == GLUG_OS_LIN
+
+#include "linux/system_context.h"
+#include "posix/system_context.h"
+typedef struct
 {
-    struct win32_context win32_context;
-    struct macos_context macos_context;
-};
+    struct linux_context lin;
+    struct posix_context pos;
+} sys_context;
+
+#elif GLUG_OS == GLUG_OS_BSD
+
+#elif GLUG_OS == GLUG_OS_UNK
+
+#include "null/system_context.h"
+typedef struct null_context sys_context;
+
+#endif
 
 struct glug_sys
 {
-    uint32_t (*cpu_count)(void);
-    uint32_t (*active_cpus)(void);
-    uint64_t (*physical_mem)(void);
-    union sys_context context;
-    void (*free_context)(union sys_context *);
+    uint32_t (*cpu_count)(const sys_context *);
+    uint32_t (*active_cpus)(const sys_context *);
+    uint64_t (*physical_mem)(const sys_context *);
+    sys_context context;
 };
 
 void build_system(struct glug_sys *);
+void teardown_system(struct glug_sys *);
 
 #endif // GLUG_SYSTEM_BUILDER_H

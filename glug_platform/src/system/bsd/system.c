@@ -4,7 +4,7 @@
 #include <sys/sysctl.h>
 #include <unistd.h>
 
-uint32_t cpu_count_bsd()
+uint32_t cpu_count_bsd(void)
 {
     uint32_t ncpu = 0;
     int mib[2];
@@ -17,7 +17,7 @@ uint32_t cpu_count_bsd()
     return ncpu;
 }
 
-uint32_t active_cpus_bsd()
+uint32_t active_cpus_bsd(void)
 {
     uint32_t ncpu = 0;
 
@@ -35,7 +35,7 @@ uint32_t active_cpus_bsd()
     return ncpu;
 }
 
-uint64_t physical_mem_bsd()
+uint64_t physical_mem_bsd(void)
 {
     uint64_t bytes = 0;
     int mib[2];

@@ -9,7 +9,9 @@
 
 static enum glug_os get_os_win(const plat_context *context)
 {
-    return os_win(&context->win);
+    (void) context;
+
+    return os_win();
 }
 
 static void get_os_version_win(struct glug_plat_version *version, const plat_context *context)

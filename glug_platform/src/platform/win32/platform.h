@@ -6,7 +6,7 @@
 
 struct win32_context;
 
-enum glug_os    os_win(const struct win32_context *);
+enum glug_os    os_win(void);
 void            os_version_win(struct glug_plat_version *, const struct win32_context *);
 void            kernel_version_win(struct glug_plat_version *, const struct win32_context *);
 

@@ -58,6 +58,7 @@ list(
     ${NULL_PLAT_ROOT}/platform_context.h
     ${NULL_PLAT_ROOT}/platform.h
     ${NULL_PLAT_ROOT}/platform.c
+    ${NULL_SYS_ROOT}/system_context.h
     ${NULL_SYS_ROOT}/system.h
     ${NULL_SYS_ROOT}/system.c
 )
@@ -72,6 +73,7 @@ list(
     ${WIN32_PLAT_ROOT}/platform_context.h
     ${WIN32_PLAT_ROOT}/platform.h
     ${WIN32_PLAT_ROOT}/platform.c
+    ${WIN32_SYS_ROOT}/system_context.h
     ${WIN32_SYS_ROOT}/system.h
     ${WIN32_SYS_ROOT}/system.c
 )
@@ -86,6 +88,7 @@ list(
     ${MACOS_PLAT_ROOT}/platform_context.h
     ${MACOS_PLAT_ROOT}/platform.h
     ${MACOS_PLAT_ROOT}/platform.m
+    ${MACOS_SYS_ROOT}/system_context.h
     ${MACOS_SYS_ROOT}/system.h
     ${MACOS_SYS_ROOT}/system.m
 )
@@ -102,11 +105,13 @@ list(
     ${LINUX_PLAT_ROOT}/platform_context.h
     ${LINUX_PLAT_ROOT}/platform.h
     ${LINUX_PLAT_ROOT}/platform.c
+    ${LINUX_SYS_ROOT}/system_context.h
     ${LINUX_SYS_ROOT}/system.h
     ${LINUX_SYS_ROOT}/system.c
     ${POSIX_PLAT_ROOT}/platform_context.h
     ${POSIX_PLAT_ROOT}/platform.h
     ${POSIX_PLAT_ROOT}/platform.c
+    ${POSIX_SYS_ROOT}/system_context.h
     ${POSIX_SYS_ROOT}/system.h
     ${POSIX_SYS_ROOT}/system.c
 )
@@ -118,10 +123,13 @@ list(
     APPEND
     BSD_SOURCE
     ${COMMON_SOURCE}
+    ${BSD_PLAT_ROOT}/platform_context.h
     ${BSD_PLAT_ROOT}/platform.h
     ${BSD_PLAT_ROOT}/platform.c
+    ${BSD_SYS_ROOT}/system_context.h
     ${BSD_SYS_ROOT}/system.h
     ${BSD_SYS_ROOT}/system.c
+    ${POSIX_SYS_ROOT}/system_context.h
     ${POSIX_SYS_ROOT}/system.h
     ${POSIX_SYS_ROOT}/system.c
 )

@@ -6,9 +6,7 @@
 
 void build_platform(struct glug_plat *platform)
 {
-    platform->os = os_null;
-    platform->os_version = os_version_null;
-    platform->kernel_version = kernel_version_null;
+    (void) platform;
 }
 
 void teardown_platform(struct glug_plat *platform)

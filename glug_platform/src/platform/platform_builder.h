@@ -3,7 +3,6 @@
 
 #include <glug/platform/os.h>
 #include <glug/platform/version_t.h>
-
 #include <glug/os.h>
 
 #if GLUG_OS == GLUG_OS_WIN

@@ -2,7 +2,7 @@
 
 #include <unistd.h>
 
-uint32_t cpu_count_posix()
+uint32_t cpu_count_posix(void)
 {
     long cpus = sysconf(_SC_NPROCESSORS_CONF);
 
@@ -11,7 +11,7 @@ uint32_t cpu_count_posix()
     return (uint32_t)cpus;
 }
 
-uint32_t active_cpus_posix()
+uint32_t active_cpus_posix(void)
 {
     long cpus = sysconf(_SC_NPROCESSORS_ONLN);
 
@@ -20,7 +20,7 @@ uint32_t active_cpus_posix()
     return (uint32_t)cpus;
 }
 
-uint64_t physical_mem_posix()
+uint64_t physical_mem_posix(void)
 {
     long pages = sysconf(_SC_PHYS_PAGES);
     long page_sz = sysconf(_SC_PAGESIZE);

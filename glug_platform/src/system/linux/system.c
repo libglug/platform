@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-uint32_t cpu_count_linux()
+uint32_t cpu_count_linux(void)
 {
     FILE *cpuinfo = popen("lscpu | grep ^CPU\\(s\\)", "r");
     uint32_t ncpu = 0;
@@ -17,7 +17,7 @@ uint32_t cpu_count_linux()
     return ncpu;
 }
 
-uint32_t active_cpus_linux()
+uint32_t active_cpus_linux(void)
 {
     FILE *cpuinfo = popen("lscpu | grep ^On-line | grep -o \",\" | wc -l", "r");
     uint32_t ncpu = 0;
@@ -32,7 +32,7 @@ uint32_t active_cpus_linux()
     return ncpu;
 }
 
-uint64_t physical_mem_linux()
+uint64_t physical_mem_linux(void)
 {
     FILE *meminfo = popen("free -b | grep Mem:", "r");
     uint64_t bytes = 0;

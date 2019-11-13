@@ -4,10 +4,8 @@
 #include <Windows.h>
 #include <stdlib.h>
 
-enum glug_os os_win(const struct win32_context *context)
+enum glug_os os_win(void)
 {
-    (void) context;
-
     return glug_os_windows;
 }
 
