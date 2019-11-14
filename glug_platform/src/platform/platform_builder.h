@@ -31,6 +31,9 @@ typedef struct
 
 #elif GLUG_OS == GLUG_OS_BSD
 
+#include "bsd/platform_context.h"
+typedef struct bsd_context plat_context;
+
 #elif GLUG_OS == GLUG_OS_UNK
 
 #include "null/platform_context.h"

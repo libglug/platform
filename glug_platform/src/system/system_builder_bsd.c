@@ -3,19 +3,34 @@
 
 #if GLUG_OS == GLUG_OS_BSD
 #include "bsd/system.h"
-#if __POSIX_VISIBLE
-#include "posix/system.h"
-#endif
+
+static uint32_t get_cpu_count_bsd(const sys_context *context)
+{
+    (void) context;
+
+    return cpu_count_bsd();
+}
+
+static uint32_t get_active_cpus_bsd(const sys_context *context)
+{
+    (void) context;
+
+    return active_cpus_bsd();
+}
+
+static uint64_t get_physical_mem_bsd(const sys_context *context)
+{
+    (void) context;
+
+    return physical_mem_bsd();
+}
+
 
 void build_system(struct glug_sys *system)
 {
-    system->cpu_count    = cpu_count_bsd;
-    system->active_cpus  = active_cpus_bsd;
-    system->physical_mem = physical_mem_bsd;
-
-#if __POSIX_VISIBLE
-    system->active_cpus = active_cpus_bsd() ? active_cpus_bsd : active_cpus_posix;
-#endif
+    system->cpu_count    = get_cpu_count_bsd;
+    system->active_cpus  = get_active_cpus_bsd;
+    system->physical_mem = get_physical_mem_bsd;
 }
 
 void teardown_system(struct glug_sys *system)

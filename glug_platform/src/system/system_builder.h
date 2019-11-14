@@ -26,6 +26,9 @@ typedef struct
 
 #elif GLUG_OS == GLUG_OS_BSD
 
+#include "bsd/system_context.h"
+typedef struct bsd_context sys_context;
+
 #elif GLUG_OS == GLUG_OS_UNK
 
 #include "null/system_context.h"
