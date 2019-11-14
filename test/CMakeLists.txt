@@ -44,7 +44,7 @@ add_unit_test(
         unit/linux/mocks/unistd.h
         unit/linux/mocks/unistd.c
         unit/linux/system.c
-        ${SRC_ROOT}/src/linux/system.c
+        ${SRC_ROOT}/src/system/linux/system.c
     INCLUDE_DIRS
         ${TEST_ROOT}
         ${SRC_ROOT}
@@ -60,7 +60,7 @@ add_unit_test(
         unit/win32/mocks/Windows.h
         unit/win32/mocks/Windows.c
         unit/win32/system.c
-        ${SRC_ROOT}/src/win32/system.c
+        ${SRC_ROOT}/src/system/win32/system.c
     INCLUDE_DIRS
         ${TEST_ROOT}
         ${SRC_ROOT}

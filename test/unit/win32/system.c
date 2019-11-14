@@ -4,7 +4,7 @@
 #include <create_suite.h>
 
 #include "mocks/Windows.h"
-#include <src/win32/system.h>
+#include <src/system/win32/system.h>
 
 void test_cpus(void)
 {

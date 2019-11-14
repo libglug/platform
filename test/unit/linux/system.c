@@ -4,7 +4,7 @@
 #include <create_suite.h>
 
 #include "mocks/unistd.h"
-#include <src/linux/system.h>
+#include <src/system/linux/system.h>
 
 void test_cpus(void)
 {
