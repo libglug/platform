@@ -6,14 +6,39 @@
 
 void build_platform(struct glug_plat *platform)
 {
-    platform->os = os_mac;
-    platform->os_version = responds_to_osversion() ? os_version_mac : os_version_fallback_mac;
-    platform->kernel_version = kernel_version_mac;
+    platform->use_fallback = responds_to_osversion();
+    platform->product_version = popen("sw_vers -productVersion", "r");
 }
 
 void teardown_platform(struct glug_plat *platform)
 {
-    (void) platform;
+    if (platform)
+    {
+        if (platform->product_version)
+            pclose(platform->product_version);
+    }
 }
 
+enum glug_os os_plat(const struct glug_plat *platform)
+{
+    (void) platform;
+
+    return os_mac();
+}
+
+void os_version_plat(const struct glug_plat *platform, struct glug_plat_version *version)
+{
+    (void) platform;
+
+    if (version)
+        os_version_mac(version);
+}
+
+void kernel_version_plat(const struct glug_plat *platform, struct glug_plat_version *version)
+{
+    (void) platform;
+
+    if (version)
+        kernel_version_mac(version);
+}
 #endif // GLUG_OS == GLUG_OS_MAC

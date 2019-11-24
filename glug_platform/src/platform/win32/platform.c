@@ -1,5 +1,4 @@
 #include "platform.h"
-#include "platform_context.h"
 
 #include <Windows.h>
 #include <stdlib.h>
@@ -9,30 +8,27 @@ enum glug_os os_win(void)
     return glug_os_windows;
 }
 
-void os_version_win(struct glug_plat_version *version, const struct win32_context *context)
+void os_version_win(const RtlGetVersion_t rtl_get_version, struct glug_plat_version *version)
 {
     OSVERSIONINFOEX vi = {0};
     vi.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 
-    context->rtl_get_version(&vi);
+    rtl_get_version(&vi);
 
     version->major = vi.dwMajorVersion;
     version->minor = vi.dwMinorVersion;
     version->patch = vi.wServicePackMajor;
 }
 
-void kernel_version_win(struct glug_plat_version *version, const struct win32_context *context)
+void kernel_version_win(GetFileVersionInfoSize_t get_version_info_size, GetFileVersionInfo_t get_version_info,
+                        VerQueryValue_t version_query_value, struct glug_plat_version *version)
 {
-    DWORD len = 0;
-    void *fvi = NULL;
-    PUINT bytes = 0;
-    LPVOID vqv;
+    DWORD len = get_version_info_size("Kernel32.dll", NULL);
+    LPVOID fvi = malloc(len), vqv;
+    UINT bytes = 0;
 
-    len = context->get_version_info_size("Kernel32.dll", NULL);
-    fvi = malloc(len);
-
-    context->get_version_info("Kernel32.dll", 0, len, fvi);
-    if (!context->version_query_value(fvi, "\\", &vqv, bytes))
+    get_version_info("Kernel32.dll", 0, len, fvi);
+    if (!version_query_value(fvi, "\\", &vqv, &bytes))
     {
         free(fvi);
         return;

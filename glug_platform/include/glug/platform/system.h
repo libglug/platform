@@ -4,10 +4,14 @@
 #include <glug/import.h>
 #include <glug/extern.h>
 
-#include <glug/platform/system_t.h>
 #include <stdint.h>
 
 GLUG_EXTERN_START
+
+struct glug_sys;
+#ifdef GLUG_USE_TYPEDEFS
+    typedef struct glug_sys glug_sys_t;
+#endif
 
 GLUG_LIB_API struct glug_sys *  glug_sys_create(void);
 GLUG_LIB_API struct glug_sys *  glug_sys_free(struct glug_sys *);

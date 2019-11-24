@@ -3,61 +3,54 @@
 
 #if GLUG_OS == GLUG_OS_LIN
 #include "linux/system.h"
-#include "posix/system.h"
 
-static uint32_t get_cpu_count_linux(const sys_context *context)
-{
-    (void) context;
-
-    return cpu_count_linux();
-}
-
-static uint32_t get_cpu_count_posix(const sys_context *context)
-{
-    (void) context;
-
-    return cpu_count_posix();
-}
-
-static uint32_t get_active_cpus_linux(const sys_context *context)
-{
-    (void) context;
-
-    return active_cpus_linux();
-}
-
-static uint32_t get_active_cpus_posix(const sys_context *context)
-{
-    (void) context;
-
-    return active_cpus_posix();
-}
-
-static uint64_t physical_mem_get_linux(const sys_context *context)
-{
-    (void) context;
-
-    return physical_mem_linux();
-}
-
-static uint64_t physical_mem_get_posix(const sys_context *context)
-{
-    (void) context;
-
-    return physical_mem_posix();
-}
+#include <stdio.h>
+#include <dlfcn.h>
 
 void build_system(struct glug_sys *system)
 {
-    system->cpu_count    = cpu_count_posix() ? get_cpu_count_posix : get_cpu_count_linux;
-    system->active_cpus  = active_cpus_posix() ? get_active_cpus_posix : get_active_cpus_linux;
-    system->physical_mem = physical_mem_posix() ? physical_mem_get_posix : physical_mem_get_linux;
+    system->sys_cpu_pres = fopen("/sys/devices/system/cpu/present", "r");
+    system->sys_cpu_onln = fopen("/sys/devices/system/cpu/online", "r");
+    system->proc_meminfo = fopen("/proc/meminfo", "r");
 }
 
 void teardown_system(struct glug_sys *system)
 {
-    (void) system;
+    if (system)
+    {
+        if (system->sys_cpu_pres)
+            fclose(system->sys_cpu_pres);
+
+        if (system->sys_cpu_onln)
+            fclose(system->sys_cpu_onln);
+
+        if (system->proc_meminfo)
+            fclose(system->proc_meminfo);
+    }
 }
 
+uint32_t cpus_plat(const struct glug_sys *system)
+{
+    if (system && system->sys_cpu_pres)
+        return cpus_linux(system->sys_cpu_pres);
+
+    return 0;
+}
+
+uint32_t active_cpus_plat(const struct glug_sys *system)
+{
+    if (system && system->sys_cpu_onln)
+        return active_cpus_linux(system->sys_cpu_onln);
+
+    return 0;
+}
+
+uint64_t physical_mem_plat(const struct glug_sys *system)
+{
+    if (system && system->proc_meminfo)
+        return physical_mem_linux(system->proc_meminfo);
+
+    return 0;
+}
 
 #endif // GLUG_OS == GLUG_OS_LIN

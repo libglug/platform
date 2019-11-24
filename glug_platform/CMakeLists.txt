@@ -28,9 +28,7 @@ list(
     ${COM_ROOT}/os.h
     ${INC_ROOT}/platform.h
     ${INC_ROOT}/platform/os.h
-    ${INC_ROOT}/platform/platform_t.h
     ${INC_ROOT}/platform/platform.h
-    ${INC_ROOT}/platform/system_t.h
     ${INC_ROOT}/platform/system.h
     ${INC_ROOT}/platform/version_t.h
     ${PLAT_ROOT}/platform.c
@@ -55,10 +53,8 @@ set (NULL_SYS_ROOT ${SYS_ROOT}/null)
 list(
     APPEND
     COMMON_SOURCE
-    ${NULL_PLAT_ROOT}/platform_context.h
     ${NULL_PLAT_ROOT}/platform.h
     ${NULL_PLAT_ROOT}/platform.c
-    ${NULL_SYS_ROOT}/system_context.h
     ${NULL_SYS_ROOT}/system.h
     ${NULL_SYS_ROOT}/system.c
 )
@@ -70,10 +66,8 @@ list(
     APPEND
     WIN32_SOURCE
     ${COMMON_SOURCE}
-    ${WIN32_PLAT_ROOT}/platform_context.h
     ${WIN32_PLAT_ROOT}/platform.h
     ${WIN32_PLAT_ROOT}/platform.c
-    ${WIN32_SYS_ROOT}/system_context.h
     ${WIN32_SYS_ROOT}/system.h
     ${WIN32_SYS_ROOT}/system.c
 )
@@ -85,10 +79,8 @@ list(
     APPEND
     MACOS_SOURCE
     ${COMMON_SOURCE}
-    ${MACOS_PLAT_ROOT}/platform_context.h
     ${MACOS_PLAT_ROOT}/platform.h
     ${MACOS_PLAT_ROOT}/platform.m
-    ${MACOS_SYS_ROOT}/system_context.h
     ${MACOS_SYS_ROOT}/system.h
     ${MACOS_SYS_ROOT}/system.m
 )
@@ -96,24 +88,14 @@ list(
 # Linux sources
 set(LINUX_PLAT_ROOT ${PLAT_ROOT}/linux)
 set(LINUX_SYS_ROOT ${SYS_ROOT}/linux)
-set(POSIX_PLAT_ROOT ${PLAT_ROOT}/posix)
-set(POSIX_SYS_ROOT ${SYS_ROOT}/posix)
 list(
     APPEND
     LINUX_SOURCE
     ${COMMON_SOURCE}
-    ${LINUX_PLAT_ROOT}/platform_context.h
     ${LINUX_PLAT_ROOT}/platform.h
     ${LINUX_PLAT_ROOT}/platform.c
-    ${LINUX_SYS_ROOT}/system_context.h
     ${LINUX_SYS_ROOT}/system.h
     ${LINUX_SYS_ROOT}/system.c
-    ${POSIX_PLAT_ROOT}/platform_context.h
-    ${POSIX_PLAT_ROOT}/platform.h
-    ${POSIX_PLAT_ROOT}/platform.c
-    ${POSIX_SYS_ROOT}/system_context.h
-    ${POSIX_SYS_ROOT}/system.h
-    ${POSIX_SYS_ROOT}/system.c
 )
 
 # BSD sources
@@ -123,15 +105,10 @@ list(
     APPEND
     BSD_SOURCE
     ${COMMON_SOURCE}
-    ${BSD_PLAT_ROOT}/platform_context.h
     ${BSD_PLAT_ROOT}/platform.h
     ${BSD_PLAT_ROOT}/platform.c
-    ${BSD_SYS_ROOT}/system_context.h
     ${BSD_SYS_ROOT}/system.h
     ${BSD_SYS_ROOT}/system.c
-    ${POSIX_SYS_ROOT}/system_context.h
-    ${POSIX_SYS_ROOT}/system.h
-    ${POSIX_SYS_ROOT}/system.c
 )
 
 add_gluglib(

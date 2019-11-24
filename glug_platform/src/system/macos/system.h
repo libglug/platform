@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-uint32_t    cpu_count_mac(void);
+uint32_t    cpus_mac(void);
 uint32_t    active_cpus_mac(void);
 uint64_t    physical_mem_mac(void);
 

@@ -3,76 +3,67 @@
 
 #if GLUG_OS == GLUG_OS_LIN
 #include "linux/platform.h"
-#include "posix/platform.h"
 
 #include <dlfcn.h>
 
-static enum glug_os get_os_linux(const plat_context *context)
-{
-    return os_linux(&context->lin);
-}
-
-static void get_os_version_linux(struct glug_plat_version *version, const plat_context *context)
-{
-    os_version_linux(version, &context->lin);
-}
-
-static void get_os_version_posix(struct glug_plat_version *version, const plat_context *context)
-{
-    os_version_posix(version, &context->pos);
-}
-
-static void get_kernel_version_linux(struct glug_plat_version *version, const plat_context *context)
-{
-    kernel_version_linux(version, &context->lin);
-}
-
-static void get_kernel_version_posix(struct glug_plat_version *version, const plat_context *context)
-{
-    kernel_version_posix(version, &context->pos);
-}
-
-#include <string.h>
-
 void build_platform(struct glug_plat *platform)
 {
-    FILE *proc_version = NULL, *lsb_release = NULL;
-    plat_context *context = &platform->plat_context;
-    void *libc = dlopen(0, RTLD_NOW);
+    void *libc;
 
-    platform->os = get_os_linux;
+    // os version
+    platform->lsb_release = fopen("/etc/lsb-release", "r");
 
+    // kernel version
+    libc = dlopen(0, RTLD_NOW);
     if (libc)
     {
-        int (*uname)(struct utsname *) = (int (*)(struct utsname *))dlsym(libc, "uname");
-        if (uname)
-        {
-            context->pos.uname = uname;
-            platform->kernel_version = get_kernel_version_posix;
-        }
-    }
-    else if ((proc_version = fopen("/proc/version", "r")))
-    {
-        context->lin.proc_version = proc_version;
-        platform->kernel_version = get_kernel_version_linux;
+        void *uname = dlsym(platform->libc, "uname");
+
+        platform->libc = libc;
+        platform->uname = (uname_t)uname;
     }
 
-    if ((lsb_release = fopen("/etc/lsb-release", "r")))
-    {
-        context->pos.lsb_release = lsb_release;
-        platform->os_version = get_os_version_posix;
-    }
-
-    dlclose(libc);
+    platform->proc_version = fopen("/proc/version", "r");
 }
 
 void teardown_platform(struct glug_plat *platform)
 {
-    if (platform->plat_context.lin.proc_version)
-        fclose(platform->plat_context.lin.proc_version);
+    if (platform)
+    {
+        if (platform->libc)
+            dlclose(platform->libc);
 
-    if (platform->plat_context.pos.lsb_release)
-        fclose(platform->plat_context.pos.lsb_release);
+        if (platform->proc_version)
+            fclose(platform->proc_version);
+
+        if (platform->lsb_release)
+            fclose(platform->lsb_release);
+    }
+}
+
+enum glug_os os_plat(const struct glug_plat *platform)
+{
+    (void) platform;
+
+    return os_linux();
+}
+
+void os_version_plat(const struct glug_plat *platform, struct glug_plat_version *version)
+{
+    if (version)
+        if (platform->lsb_release)
+            os_version_lsb(platform->lsb_release, version);
+}
+
+void kernel_version_plat(const struct glug_plat *platform, struct glug_plat_version *version)
+{
+    if (version)
+    {
+        if (platform->uname)
+            kernel_version_uname(platform->uname, version);
+        else if (platform->proc_version)
+            kernel_version_linux(platform->proc_version, version);
+    }
 }
 
 #endif // GLUG_OS == GLUG_OS_LIN

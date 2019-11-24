@@ -7,49 +7,61 @@
 
 #if GLUG_OS == GLUG_OS_WIN
 
-#include "win32/platform_context.h"
-typedef struct {
-    HANDLE ntdll;
-    HANDLE versiondll;
-    struct win32_context win;
-} plat_context;
-
-#elif GLUG_OS == GLUG_OS_MAC
-
-#include "macos/platform_context.h"
-typedef struct macos_context plat_context;
-
-#elif GLUG_OS == GLUG_OS_LIN
-
-#include "linux/platform_context.h"
-#include "posix/platform_context.h"
-typedef struct
-{
-    struct linux_context lin;
-    struct posix_context pos;
-} plat_context;
-
-#elif GLUG_OS == GLUG_OS_BSD
-
-#include "bsd/platform_context.h"
-typedef struct bsd_context plat_context;
-
-#elif GLUG_OS == GLUG_OS_UNK
-
-#include "null/platform_context.h"
-typedef struct null_context plat_context;
-
-#endif
+#include "win32/platform.h"
 
 struct glug_plat
 {
-    enum glug_os (*os)(const plat_context *);
-    void         (*os_version)(struct glug_plat_version *, const plat_context *);
-    void         (*kernel_version)(struct glug_plat_version *, const plat_context *);
-    plat_context plat_context;
+    HANDLE                   ntdll;
+    HANDLE                   versiondll;
+    RtlGetVersion_t          rtl_get_version;
+    GetFileVersionInfoSize_t get_version_info_size;
+    GetFileVersionInfo_t     get_version_info;
+    VerQueryValue_t          version_query_value;
 };
+
+#elif GLUG_OS == GLUG_OS_MAC
+
+#include "macos/platform.h"
+struct glug_plat
+{
+    glug_bool use_fallback;
+    FILE     *product_version;
+};
+
+#elif GLUG_OS == GLUG_OS_LIN
+
+#include "linux/platform.h"
+struct glug_plat
+{
+    void    *libc;
+    FILE    *lsb_release;
+    uname_t  uname;
+    FILE    *proc_version;
+};
+
+#elif GLUG_OS == GLUG_OS_BSD
+
+#include "bsd/platform.h"
+struct glug_plat
+{
+    void     *libc;
+    sysctl_t  sysctl;
+};
+
+#elif GLUG_OS == GLUG_OS_UNK
+
+struct glug_plat
+{
+    void *_unused;
+};
+
+#endif
 
 void build_platform(struct glug_plat *);
 void teardown_platform(struct glug_plat *);
+
+enum glug_os    os_plat(const struct glug_plat *);
+void            os_version_plat(const struct glug_plat *, struct glug_plat_version *);
+void            kernel_version_plat(const struct glug_plat *, struct glug_plat_version *);
 
 #endif // GLUG_PLATFORM_PLATFORM_H

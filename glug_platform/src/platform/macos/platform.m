@@ -1,29 +1,24 @@
 #import "platform.h"
-#import "platform_context.h"
 
-#import <sys/utsname.h>
 #import <stdio.h>
+#import <sys/utsname.h>
 #import <Foundation/NSProcessInfo.h>
 
-enum glug_os os_mac(const struct macos_context *context)
+enum glug_os os_mac(void)
 {
-    (void) context;
-
     return glug_os_macos;
 }
 
-void os_version_mac(struct glug_plat_version *version, const struct macos_context *context)
+void os_version_mac(struct glug_plat_version *version)
 {
-    (void) context;
     NSOperatingSystemVersion os_vers = [[NSProcessInfo processInfo] operatingSystemVersion];
     version->major = (uint32_t)os_vers.majorVersion;
     version->minor = (uint32_t)os_vers.minorVersion;
     version->patch = (uint32_t)os_vers.patchVersion;
 }
 
-void kernel_version_mac(struct glug_plat_version *version, const struct macos_context *context)
+void kernel_version_mac(struct glug_plat_version *version)
 {
-    (void) context;
     struct utsname utsname;
     uname(&utsname);
 
@@ -35,13 +30,10 @@ glug_bool responds_to_osversion(void)
     return [NSProcessInfo instancesRespondToSelector: @selector(operatingSystemVersion)] == YES;
 }
 
-void os_version_fallback_mac(struct glug_plat_version *version, const struct macos_context *context)
+void os_version_fallback_mac(FILE *product_version, struct glug_plat_version *version)
 {
-    (void) context;
-    FILE *sw_vers = popen("sw_vers -productVersion", "r");
+    if (!product_version) return;
 
-    if (!sw_vers) return;
-
-    fscanf(sw_vers, "%u.%u.%u", &version->major, &version->minor, &version->patch);
-    pclose(sw_vers);
+    fscanf(product_version, "%u.%u.%u", &version->major, &version->minor, &version->patch);
+    pclose(product_version);
 }

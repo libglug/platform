@@ -5,37 +5,48 @@
 #include "bsd/platform.h"
 #include <dlfcn.h>
 
-static enum glug_os get_os_bsd(const struct bsd_context *context)
-{
-    (void) context;
-
-    return os_bsd();
-}
 
 void build_platform(struct glug_plat *platform)
 {
-    plat_context *context = &platform->plat_context;
     void *libc = dlopen(0, RTLD_NOW);
-
-    platform->os = get_os_bsd;
 
     if (libc)
     {
         sysctl_t sysctl = (sysctl_t)dlsym(libc, "sysctl");
         if (sysctl)
         {
-            context->sysctl = sysctl;
-            platform->os_version = os_version_bsd;
-            platform->kernel_version = kernel_version_bsd;
+            platform->libc   = libc;
+            platform->sysctl = sysctl;
         }
     }
-
-    dlclose(libc);
 }
 
 void teardown_platform(struct glug_plat *platform)
 {
+    if (platform)
+    {
+        if (platform->libc)
+            dlclose(platform->libc);
+    }
+}
+
+enum glug_os os_plat(const struct glug_plat *platform)
+{
     (void) platform;
+
+    return os_bsd();
+}
+
+void os_version_plat(const struct glug_plat *platform, struct glug_plat_version *version)
+{
+    if (version && platform && platform->sysctl)
+        os_version_bsd(platform->sysctl, version);
+}
+
+void kernel_version_plat(const struct glug_plat *platform, struct glug_plat_version *version)
+{
+    if (version && platform && platform->sysctl)
+        kernel_version_bsd(platform->sysctl, version);
 }
 
 #endif // GLUG_OS == GLUG_OS_BSD

@@ -3,8 +3,14 @@
 
 #include <stdint.h>
 
-uint32_t    cpu_count_win(void);
-uint32_t    active_cpus_win(void);
-uint64_t    physical_mem_win(void);
+#define WIN32_LEAN_AND_MEAN
+#include <Windows.h>
+
+typedef void (*GetNSInfo_t)(LPSYSTEM_INFO);
+typedef void (*GetPISMemory_t)(PULONGLONG);
+
+uint32_t    cpus_win(GetNSInfo_t);
+uint32_t    active_cpus_win(GetNSInfo_t);
+uint64_t    physical_mem_win(GetPISMemory_t);
 
 #endif // GLUG_SYSTEM_WIN32_H

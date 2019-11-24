@@ -2,7 +2,7 @@
 
 #include <Foundation/NSProcessInfo.h>
 
-uint32_t cpu_count_mac(void)
+uint32_t cpus_mac(void)
 {
     return (uint32_t)[[NSProcessInfo processInfo] processorCount];
 }

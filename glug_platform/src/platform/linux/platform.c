@@ -1,24 +1,50 @@
 #include "platform.h"
-#include "platform_context.h"
 
 #include <stdio.h>
+#include <string.h>
+#include <sys/utsname.h>
 
-enum glug_os os_linux(const struct linux_context *context)
+enum glug_os os_linux(void)
 {
-    (void) context;
     return glug_os_linux;
 }
 
-void os_version_linux(struct glug_plat_version *version, const struct linux_context *context)
+void os_version_linux(struct glug_plat_version *version)
 {
     (void) version;
-    (void) context;
 }
 
-void kernel_version_linux(struct glug_plat_version *version, const struct linux_context *context)
+void os_version_lsb(FILE *lsb_release, struct glug_plat_version *version)
 {
-    FILE *proc_version = context->proc_version;
+    char tmp[20];
+    int read = 0;
 
+    fseek(lsb_release, 0, SEEK_SET);
+
+    while((read = fscanf(lsb_release, " %20[^=]", tmp)))
+    {
+        if (!strcmp(tmp, "DISTRIB_RELEASE"))
+        {
+            fscanf(lsb_release, "=%u.%u.%u.%*u", &version->major, &version->minor, &version->patch);
+            return;
+        }
+        // advance to next line
+        fscanf(lsb_release, "%*[^\n]");
+    }
+}
+
+void kernel_version_linux(FILE *proc_version, struct glug_plat_version *version)
+{
     fseek(proc_version, 0, SEEK_SET);
     fscanf(proc_version, "%*[^0-9] %u.%u.%u", &version->major, &version->minor, &version->patch);
+}
+
+void kernel_version_uname(const uname_t uname, struct glug_plat_version *version)
+{
+    struct utsname utsname;
+
+    if (uname(&utsname) == -1)
+        return;
+
+    sscanf(utsname.release, "%u.%u.%u", &version->major, &version->minor, &version->patch);
 }

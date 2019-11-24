@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-uint32_t    cpu_count_null(void);
+uint32_t    cpus_null(void);
 uint32_t    active_cpus_null(void);
 uint64_t    physical_mem_null(void);
 

@@ -1,6 +1,6 @@
 #include "system.h"
 
-uint32_t cpu_count_null(void)
+uint32_t cpus_null(void)
 {
     return 0;
 }
