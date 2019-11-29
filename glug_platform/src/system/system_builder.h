@@ -1,9 +1,9 @@
 #ifndef GLUG_SYSTEM_BUILDER_H
 #define GLUG_SYSTEM_BUILDER_H
 
-#include <stdint.h>
 #include <glug/bool.h>
 #include <glug/os.h>
+#include <stdint.h>
 
 #if GLUG_OS == GLUG_OS_WIN
 
@@ -52,11 +52,11 @@ struct glug_sys
 
 #endif
 
-void build_system(struct glug_sys *);
-void teardown_system(struct glug_sys *);
+GLUG_LIB_LOCAL void build_system(struct glug_sys *);
+GLUG_LIB_LOCAL void teardown_system(struct glug_sys *);
 
-uint32_t cpus_plat(const struct glug_sys *);
-uint32_t active_cpus_plat(const struct glug_sys *);
-uint64_t physical_mem_plat(const struct glug_sys *);
+GLUG_LIB_LOCAL uint32_t cpus_plat(const struct glug_sys *);
+GLUG_LIB_LOCAL uint32_t active_cpus_plat(const struct glug_sys *);
+GLUG_LIB_LOCAL uint64_t physical_mem_plat(const struct glug_sys *);
 
 #endif // GLUG_SYSTEM_BUILDER_H

@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-uint32_t    cpus_mac(void);
-uint32_t    active_cpus_mac(void);
-uint64_t    physical_mem_mac(void);
+GLUG_LIB_LOCAL uint32_t cpus_mac(void);
+GLUG_LIB_LOCAL uint32_t active_cpus_mac(void);
+GLUG_LIB_LOCAL uint64_t physical_mem_mac(void);
 
 #endif // GLUG_SYSTEM_MACOS_H

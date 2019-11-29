@@ -12,9 +12,9 @@ typedef DWORD (*GetFileVersionInfoSize_t)(LPCSTR, LPDWORD);
 typedef DWORD (*GetFileVersionInfo_t)(LPCSTR, DWORD, DWORD, LPVOID);
 typedef BOOL (*VerQueryValue_t)(LPCVOID, LPCSTR, LPVOID *, PUINT);
 
-enum glug_os    os_win(void);
-void            os_version_win(const RtlGetVersion_t, struct glug_plat_version *);
-void            kernel_version_win(GetFileVersionInfoSize_t, GetFileVersionInfo_t,
-                                   VerQueryValue_t, struct glug_plat_version *);
+GLUG_LIB_LOCAL enum glug_os os_win(void);
+GLUG_LIB_LOCAL void         os_version_win(const RtlGetVersion_t, struct glug_plat_version *);
+GLUG_LIB_LOCAL void         kernel_version_win(GetFileVersionInfoSize_t, GetFileVersionInfo_t,
+                                               VerQueryValue_t, struct glug_plat_version *);
 
 #endif // GLUG_PLATFORM_WIN32_H

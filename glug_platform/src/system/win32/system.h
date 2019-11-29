@@ -9,8 +9,8 @@
 typedef void (*GetNSInfo_t)(LPSYSTEM_INFO);
 typedef void (*GetPISMemory_t)(PULONGLONG);
 
-uint32_t    cpus_win(GetNSInfo_t);
-uint32_t    active_cpus_win(GetNSInfo_t);
-uint64_t    physical_mem_win(GetPISMemory_t);
+GLUG_LIB_LOCAL uint32_t cpus_win(GetNSInfo_t);
+GLUG_LIB_LOCAL uint32_t active_cpus_win(GetNSInfo_t);
+GLUG_LIB_LOCAL uint64_t physical_mem_win(GetPISMemory_t);
 
 #endif // GLUG_SYSTEM_WIN32_H

@@ -3,8 +3,8 @@
 
 #include <stdint.h>
 
-uint32_t    cpus_null(void);
-uint32_t    active_cpus_null(void);
-uint64_t    physical_mem_null(void);
+GLUG_LIB_LOCAL uint32_t cpus_null(void);
+GLUG_LIB_LOCAL uint32_t active_cpus_null(void);
+GLUG_LIB_LOCAL uint64_t physical_mem_null(void);
 
 #endif // GLUG_SYSTEM_NULL_H

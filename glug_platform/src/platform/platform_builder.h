@@ -57,11 +57,11 @@ struct glug_plat
 
 #endif
 
-void build_platform(struct glug_plat *);
-void teardown_platform(struct glug_plat *);
+GLUG_LIB_LOCAL void         build_platform(struct glug_plat *);
+GLUG_LIB_LOCAL void         teardown_platform(struct glug_plat *);
 
-enum glug_os    os_plat(const struct glug_plat *);
-void            os_version_plat(const struct glug_plat *, struct glug_plat_version *);
-void            kernel_version_plat(const struct glug_plat *, struct glug_plat_version *);
+GLUG_LIB_LOCAL enum glug_os os_plat(const struct glug_plat *);
+GLUG_LIB_LOCAL void         os_version_plat(const struct glug_plat *, struct glug_plat_version *);
+GLUG_LIB_LOCAL void         kernel_version_plat(const struct glug_plat *, struct glug_plat_version *);
 
 #endif // GLUG_PLATFORM_PLATFORM_H
